@@ -31,20 +31,15 @@
 <div class="scene fill-papel" id="s1">
   <div class="placa p1"><div class="lbl">AÇOUGUE</div><div class="prod">Picanha</div><div class="preco">R$ 149,90<small>/kg</small></div></div>
   <div class="ilustr">PREÇOS ILUSTRATIVOS</div>
-  <div class="pip" style="left:660px;top:1010px;width:300px;height:390px">
+  <div class="pip" style="left:650px;top:1020px;width:310px;height:340px">
     <div class="clip-ph"><div class="lbl">AVATAR</div><div class="cabeca"></div><div class="corpo"></div></div>
-    <video class="clip" data-start="0" src="../assets/heygen/v1_narradora.mp4" preload="auto"></video></div>
-  <div class="tag-ia">Vídeo com avatar de IA</div>
+    <video class="clip" data-start="-0.05" src="../assets/heygen/v1_narradora.webm" preload="auto" style="transform:scale(1.6);transform-origin:50% 4%"></video></div>
 </div>
 
-<!-- S2 2,0–4,0 close no preço -->
+<!-- S2 close no preço -->
 <div class="scene fill-papel" id="s2">
   <div class="placa p2"><div class="lbl">AÇOUGUE</div><div class="prod">Picanha</div><div class="preco">R$ 149,90<small>/kg</small></div></div>
   <div class="ilustr">PREÇOS ILUSTRATIVOS</div>
-  <div class="pip" style="left:660px;top:1010px;width:300px;height:390px">
-    <div class="clip-ph"><div class="lbl">AVATAR</div><div class="cabeca"></div><div class="corpo"></div></div>
-    <video class="clip" data-start="0" src="../assets/heygen/v1_narradora.mp4" preload="auto"></video></div>
-  <div class="tag-ia">Vídeo com avatar de IA</div>
 </div>
 
 <!-- S3 4,0–6,0 carrinho vazio saindo -->
@@ -136,17 +131,21 @@
     <g fill="none" stroke="#77C9A5" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M50 10 V100"/><path d="M18 68 L50 100 L82 68"/></g></svg>
 </div>
 
-<!-- S10b 21,2–23,0 avatar em destaque -->
-<div class="scene fill-papel" id="s10b">
-  <div class="pip p10" style="left:190px;top:260px;width:700px;height:960px">
-    <div class="clip-ph"><div class="lbl">AVATAR</div><div class="cabeca"></div><div class="corpo"></div></div>
-    <video class="clip" data-start="0" src="../assets/heygen/v1_narradora.mp4" preload="auto"></video></div>
-  <div class="tag-ia">Vídeo com avatar de IA</div>
+<!-- S10b "É isso que a gente está construindo" (sem rosto: evita o close da avatar) -->
+<div class="scene fill-verde" id="s10b">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(119,201,165,.12) 2px,transparent 2px),linear-gradient(90deg,rgba(119,201,165,.12) 2px,transparent 2px);background-size:60px 60px"></div>
+  <div class="safe" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="label" style="color:var(--menta)">Gaste Pouco</div>
+    <div class="tt t10b" style="font-size:130px;margin-top:22px">Em<br>construção.</div>
+    <div style="margin-top:70px;height:34px;border-radius:20px;background:rgba(247,250,248,.18);overflow:hidden">
+      <div id="prog10" style="height:100%;width:0;background:var(--menta);border-radius:20px"></div></div>
+  </div>
 </div>
 
 <!-- S11 23,0–27,0 tela final -->
 <div class="scene fill-verde" id="s11"></div>
 
+<div class="tag-ia" id="tagia">Voz e avatar gerados por IA</div>
 <div id="cap" class="cap"></div>
 </div>
 <script src="engine.js"></script>
@@ -164,35 +163,37 @@ $('#pilha').innerHTML = pos.map((p, i) => `<div class="pc" style="position:absol
 
 const pipIn = (sel, t) => css(sel, { opacity: k(t, 0, .25), transform: `translateY(${lerp(40, 0, k(t, 0, .35, E.back))}px)` });
 
+// Linha do tempo casada com a narração real da Stephanie (frases isoladas por silêncio no arquivo
+// do HeyGen e reposicionadas: as pausas longas foram encurtadas). O rosto aparece só no gancho.
 window.VIDEO = {
-  duration: 27,
+  duration: 29.5,
   scenes: [
-    { id: 's1', start: 0, end: 2.0, render(t, d) {
+    { id: 's1', start: 0, end: 1.9, render(t, d) {
       css('.p1', { transform: `scale(${lerp(1, 1.06, t / d)})`, opacity: k(t, 0, .2) });
-      pipIn('#s1 .pip', t - .3);
+      css('#s1 .pip', { opacity: k(t, .05, .3) * (1 - k(t, 1.6, 1.85)), transform: `translateY(${lerp(40, 0, k(t, .05, .4, E.back))}px)` });
     }},
-    { id: 's2', start: 2.0, end: 4.0, render(t, d) {
-      const [sx, sy] = shake(t, .2, .35, 12);
+    { id: 's2', start: 1.9, end: 3.4, render(t, d) {
+      const [sx, sy] = shake(t, .15, .35, 12);
       css('.p2', { transform: `translate(${sx}px,${sy}px) scale(${lerp(1.25, 1.4, t / d)})` });
     }},
-    { id: 's3', start: 4.0, end: 6.25, render(t) {
-      const x = lerp(260, 1150, k(t, .3, 2.1, E.in));
+    { id: 's3', start: 3.4, end: 6.35, render(t) {
+      const x = lerp(260, 1150, k(t, .4, 2.6, E.in));
       css('#cart3', { left: x + 'px', transform: `rotate(${Math.sin(t * 18) * 1.2}deg)` });
       css('.t3', { opacity: k(t, .1, .4) });
     }},
-    { id: 's4', start: 6.25, end: 7.5, render(t, d) {
+    { id: 's4', start: 6.35, end: 8.3, render(t, d) {
       css('#casa', { transform: `scale(${lerp(.92, 1.04, t / d)})` });
       css('.t4', { opacity: k(t, .1, .4), transform: `translateY(${lerp(30, 0, k(t, .1, .45))}px)` });
     }},
-    { id: 's5', start: 7.5, end: 10.0, render(t) {
-      css('.ph5', { top: lerp(1950, 250, k(t, 0, .7, E.out)) + 'px' });
-      css('#notif', { transform: `translateY(${lerp(-260, 0, k(t, 1.0, 1.35, E.back))}px)`, opacity: k(t, 1.0, 1.15) });
+    { id: 's5', start: 8.3, end: 10.4, render(t) {
+      css('.ph5', { top: lerp(1950, 250, k(t, 0, .6, E.out)) + 'px' });
+      css('#notif', { transform: `translateY(${lerp(-260, 0, k(t, .7, 1.05, E.back))}px)`, opacity: k(t, .7, .85) });
     }},
-    { id: 's6', start: 10.0, end: 12.5, render(t) {
+    { id: 's6', start: 10.4, end: 13.2, render(t) {
       css('.c6', { transform: `scale(${lerp(.85, 1, k(t, .1, .45, E.back))})`, opacity: k(t, .1, .25) });
     }},
-    { id: 's7', start: 12.5, end: 15.0, render(t) {
-      // 0,25 risca · 0,55 o preço antigo cai · 0,75 o novo entra com zoom rápido + tremida
+    { id: 's7', start: 13.2, end: 15.8, render(t) {
+      // 0,25 risca · 0,55 o preço antigo cai · 0,75 o novo entra com zoom rápido + tremida (cha-ching)
       css('#risca7', { transform: `scaleX(${k(t, .25, .5)})` });
       const f = k(t, .55, 1.3, E.in);
       css('#velho', { transform: `translateY(${lerp(0, 1100, f)}px) rotate(${f * 18}deg)`, opacity: 1 - k(t, 1.0, 1.3) });
@@ -201,7 +202,7 @@ window.VIDEO = {
       css('#kb7', { transform: `translate(${sx}px,${sy}px) scale(${t < .75 ? 1 : lerp(1.1, 1, k(t, .75, 1.2))})` });
       css('#sexta', { opacity: k(t, 1.1, 1.35) });
     }},
-    { id: 's8', start: 15.0, end: 17.0, render(t) {
+    { id: 's8', start: 15.8, end: 18.2, render(t) {
       document.querySelectorAll('.pc').forEach((el, i) => {
         const t0 = .1 + i * .13, p = k(t, t0, t0 + .3, E.in);
         el.style.opacity = t > t0 ? 1 : 0;
@@ -209,37 +210,44 @@ window.VIDEO = {
       });
       css('#cart8', { transform: `rotate(${Math.sin(t * 20) * (t > .1 && t < 1.4 ? 1.5 : 0)}deg)` });
     }},
-    { id: 's9', start: 17.0, end: 19.5, render(t) {
-      document.querySelectorAll('.f9').forEach((el, i) => css(el, { opacity: k(t, .1 + i * .5, .35 + i * .5), transform: `translateY(${lerp(50, 0, k(t, .1 + i * .5, .45 + i * .5, E.back))}px)` }));
-      css('.s9a', { opacity: k(t, .45, .6) }); css('.s9b', { opacity: k(t, .95, 1.1) });
+    { id: 's9', start: 18.2, end: 21.0, render(t) {
+      document.querySelectorAll('.f9').forEach((el, i) => css(el, { opacity: k(t, .2 + i * .9, .45 + i * .9), transform: `translateY(${lerp(50, 0, k(t, .2 + i * .9, .55 + i * .9, E.back))}px)` }));
+      css('.s9a', { opacity: k(t, .75, .9) }); css('.s9b', { opacity: k(t, 1.65, 1.8) });
     }},
-    { id: 's10a', start: 19.5, end: 21.2, render(t) {
+    { id: 's10a', start: 21.0, end: 23.4, render(t) {
       css('.t10', { opacity: k(t, 0, .3), transform: `translateY(${lerp(40, 0, k(t, 0, .45, E.back))}px)` });
-      css('#seta10', { top: lerp(620, 1180, k(t, .3, 1.4, E.io)) + 'px', opacity: k(t, .3, .45) });
+      css('#seta10', { top: lerp(620, 1180, k(t, .3, 1.8, E.io)) + 'px', opacity: k(t, .3, .45) });
     }},
-    { id: 's10b', start: 21.2, end: 23.0, render(t) { css('.p10', { opacity: k(t, 0, .25), transform: `scale(${lerp(.94, 1, k(t, 0, .4, E.out))})` }); } },
-    { id: 's11', start: 23.0, end: 27.01, render(t) { Shared.endcardRender($('#s11'), t); } },
+    { id: 's10b', start: 23.4, end: 25.4, render(t) {
+      css('.t10b', { opacity: k(t, .05, .3), transform: `translateY(${lerp(60, 0, k(t, .05, .5, E.back))}px)` });
+      css('#prog10', { width: lerp(8, 62, k(t, .2, 1.7, E.io)) + '%' });
+    }},
+    { id: 's11', start: 25.4, end: 29.51, render(t) { Shared.endcardRender($('#s11'), t); } },
   ],
-  overlays: [t => Shared.seta(t, [6.0])],
+  overlays: [t => { Shared.seta(t, [6.1]); css('#tagia', { display: t < 25.4 ? 'block' : 'none' }); }],
   captions: [
-    { s: 0.2, e: 2.0, text: 'Tá caro comprar picanha?' },
-    { s: 4.0, e: 6.0, text: 'Aí você volta pra casa com o carrinho vazio.' },
-    { s: 7.5, e: 10.0, text: 'E se, antes de sair de casa,' },
-    { s: 10.0, e: 12.5, text: 'você soubesse que o Mercado da Esquina costuma baixar a picanha às sextas?' },
-    { s: 15.0, e: 17.0, text: 'Aí, sim.' },
-    { s: 17.0, e: 19.5, text: 'Lê a nota, monta a sua cesta e avisa quando e onde vale comprar.' },
-    { s: 19.5, e: 23.0, text: 'É isso que a gente está construindo.' },
+    { s: 0.25, e: 1.85, text: 'Tá caro comprar picanha?' },
+    { s: 3.45, e: 6.0, text: 'Aí você volta pra casa com o carrinho vazio.' },
+    { s: 6.65, e: 9.5, text: 'E se, antes de sair de casa,' },
+    { s: 9.6, e: 14.4, text: 'você soubesse que o Mercado da Esquina costuma baixar a picanha às sextas?' },
+    { s: 16.55, e: 17.8, text: 'Aí, sim.' },
+    { s: 18.45, e: 23.4, text: 'Lê a nota, monta a sua cesta e avisa quando e onde vale comprar.' },
+    { s: 23.55, e: 25.3, text: 'É isso que a gente está construindo.' },
   ],
-  vo: [{ file: 'assets/heygen/v1_narradora.wav', t: 0 }],
+  // narração: trechos (frases) do WAV da Stephanie reposicionados no tempo do vídeo
+  vo: [
+    { from: 0.25, to: 1.85, t: 0.2 }, { from: 3.70, to: 6.20, t: 3.4 }, { from: 7.60, to: 15.35, t: 6.6 },
+    { from: 18.20, to: 19.05, t: 16.52 }, { from: 20.10, to: 25.10, t: 18.4 }, { from: 25.45, to: 27.20, t: 23.5 },
+    { from: 27.85, to: 30.75, t: 25.6 },
+  ].map(v => ({ file: 'assets/heygen/v1_narradora.wav', ...v })),
   sfx: [
-    { t: 0.0, name: 'whoosh', gain: .6 }, { t: 2.2, name: 'bipe_grave' },
-    { t: 4.3, name: 'rodinhas' }, { t: 6.0, name: 'whoosh', gain: .8 },
-    { t: 8.5, name: 'notificacao' },
-    { t: 13.25, name: 'cha_ching' },
-    ...[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ({ t: 15.4 + i * .13, name: 'bipe', gain: .45 })),
-    { t: 17.1, name: 'impressora', gain: .5 },
-    { t: 19.5, name: 'whoosh', gain: .4 },
-    { t: 23.0, name: 'acorde' },
+    { t: 0.0, name: 'whoosh', gain: .5 }, { t: 2.05, name: 'bipe_grave', gain: .8 },
+    { t: 3.8, name: 'rodinhas', gain: .7 }, { t: 6.1, name: 'whoosh', gain: .7 },
+    { t: 9.0, name: 'notificacao', gain: .8 },
+    { t: 13.95, name: 'cha_ching', gain: .8 },
+    ...[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ({ t: 16.2 + i * .13, name: 'bipe', gain: .35 })),
+    { t: 21.0, name: 'whoosh', gain: .35 },
+    { t: 25.4, name: 'acorde' },
   ],
 };
 window.__seek(0);

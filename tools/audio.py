@@ -141,6 +141,9 @@ def main():
         total *= 0.7
         for v in vos:
             x = read_wav(root / v['file']) * v.get('gain', 1.0); i = int(v['t'] * SR)
+            if 'from' in v:  # recorte de um trecho do arquivo (frase), com fade curto nas pontas
+                x = x[int(v['from'] * SR):int(v['to'] * SR)].copy(); f = min(len(x) // 2, int(.03 * SR))
+                x[:f] *= np.linspace(0, 1, f); x[-f:] *= np.linspace(1, 0, f)
             total[i:i + len(x)] += x[:len(total) - i]
     total = total[:int(meta['duration'] * SR)]
     peak = np.abs(total).max() or 1
