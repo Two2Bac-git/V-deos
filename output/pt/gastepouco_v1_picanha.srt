@@ -1,17 +1,17 @@
 1
-00:00:00,250 --> 00:00:01,850
+00:00:00,250 --> 00:00:01,750
 Tá caro comprar picanha?
 
 2
-00:00:03,450 --> 00:00:06,000
+00:00:03,450 --> 00:00:05,900
 Aí você volta pra casa com o carrinho vazio.
 
 3
-00:00:06,650 --> 00:00:09,500
+00:00:06,650 --> 00:00:09,300
 E se, antes de sair de casa,
 
 4
-00:00:09,600 --> 00:00:14,400
+00:00:09,300 --> 00:00:12,600
 você soubesse que o Mercado da Esquina costuma baixar a picanha às sextas?
 
 5
@@ -19,9 +19,9 @@ você soubesse que o Mercado da Esquina costuma baixar a picanha às sextas?
 Aí, sim.
 
 6
-00:00:18,450 --> 00:00:23,400
+00:00:18,350 --> 00:00:23,450
 Lê a nota, monta a sua cesta e avisa quando e onde vale comprar.
 
 7
-00:00:23,550 --> 00:00:25,300
+00:00:23,650 --> 00:00:25,550
 É isso que a gente está construindo.
