@@ -29,6 +29,8 @@
     const waits = [];
     document.querySelectorAll('video.clip').forEach(v => {
       if (v.dataset.ok !== '1') return;
+      // só clipes visíveis: decodificar VP9 com alfa de clipes escondidos deixa o render lento
+      if (!v.offsetParent || getComputedStyle(v).display === 'none') return;
       const lt = Math.max(0, Math.min(v.duration - .01, t - parseFloat(v.dataset.start || 0)));
       if (Math.abs(v.currentTime - lt) < 1e-3) return;
       waits.push(new Promise(r => { v.addEventListener('seeked', r, { once: true }); v.currentTime = lt; }));

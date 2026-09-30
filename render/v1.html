@@ -31,9 +31,9 @@
 <div class="scene fill-papel" id="s1">
   <div class="placa p1"><div class="lbl">AÇOUGUE</div><div class="prod">Picanha</div><div class="preco">R$ 149,90<small>/kg</small></div></div>
   <div class="ilustr">PREÇOS ILUSTRATIVOS</div>
-  <div class="pip" style="left:650px;top:1020px;width:310px;height:340px">
+  <div class="pip" style="left:650px;top:1020px;width:310px;height:340px;background:#DDF0E7">
     <div class="clip-ph"><div class="lbl">AVATAR</div><div class="cabeca"></div><div class="corpo"></div></div>
-    <video class="clip" data-start="-0.05" src="../assets/heygen/v1_narradora.webm" preload="auto" style="transform:scale(1.6);transform-origin:50% 4%"></video></div>
+    <video class="clip" data-start="-0.08" src="../assets/heygen/v1_narradora.webm" preload="auto" style="transform:scale(1.6);transform-origin:50% 6%"></video></div>
 </div>
 
 <!-- S2 close no preço -->
@@ -131,15 +131,19 @@
     <g fill="none" stroke="#77C9A5" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M50 10 V100"/><path d="M18 68 L50 100 L82 68"/></g></svg>
 </div>
 
-<!-- S10b "É isso que a gente está construindo" (sem rosto: evita o close da avatar) -->
+<!-- S10b "É isso que a gente está construindo": a narradora volta, do tronco para cima (sem o notebook) -->
 <div class="scene fill-verde" id="s10b">
   <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(119,201,165,.12) 2px,transparent 2px),linear-gradient(90deg,rgba(119,201,165,.12) 2px,transparent 2px);background-size:60px 60px"></div>
-  <div class="safe" style="display:flex;flex-direction:column;justify-content:center">
-    <div class="label" style="color:var(--menta)">Gaste Pouco</div>
-    <div class="tt t10b" style="font-size:130px;margin-top:22px">Em<br>construção.</div>
-    <div style="margin-top:70px;height:34px;border-radius:20px;background:rgba(247,250,248,.18);overflow:hidden">
-      <div id="prog10" style="height:100%;width:0;background:var(--menta);border-radius:20px"></div></div>
+  <div class="safe">
+    <div class="label" style="color:var(--menta);margin-top:90px">Gaste Pouco</div>
+    <div class="tt t10b" style="font-size:104px;margin-top:18px">Em construção.</div>
+    <div style="margin-top:36px;height:28px;border-radius:16px;background:rgba(247,250,248,.18);overflow:hidden">
+      <div id="prog10" style="height:100%;width:0;background:var(--menta);border-radius:16px"></div></div>
   </div>
+  <div class="pip p10" style="left:230px;top:640px;width:620px;height:760px;background:#DDF0E7">
+    <div class="clip-ph"><div class="lbl">AVATAR</div><div class="cabeca"></div><div class="corpo"></div></div>
+    <video class="clip" data-start="2.32" src="../assets/heygen/v1_narradora.webm" preload="auto"
+      style="inset:auto;left:-10%;top:-40px;width:120%;height:auto;object-fit:initial"></video></div>
 </div>
 
 <!-- S11 23,0–27,0 tela final -->
@@ -220,27 +224,28 @@ window.VIDEO = {
       css('.t10', { opacity: k(t, 0, .3), transform: `translateY(${lerp(40, 0, k(t, 0, .45, E.back))}px)` });
       css('#seta10', { top: lerp(620, 1180, k(t, .3, 1.8, E.io)) + 'px', opacity: k(t, .3, .45) });
     }},
-    { id: 's10b', start: 23.4, end: 25.4, render(t) {
+    { id: 's10b', start: 23.4, end: 25.6, render(t) {
       css('.t10b', { opacity: k(t, .05, .3), transform: `translateY(${lerp(60, 0, k(t, .05, .5, E.back))}px)` });
-      css('#prog10', { width: lerp(8, 62, k(t, .2, 1.7, E.io)) + '%' });
+      css('#prog10', { width: lerp(8, 62, k(t, .2, 1.9, E.io)) + '%' });
+      css('.p10', { opacity: k(t, .05, .3), transform: `translateY(${lerp(50, 0, k(t, .05, .45, E.back))}px)` });
     }},
-    { id: 's11', start: 25.4, end: 29.51, render(t) { Shared.endcardRender($('#s11'), t); } },
+    { id: 's11', start: 25.6, end: 29.51, render(t) { Shared.endcardRender($('#s11'), t); } },
   ],
-  overlays: [t => { Shared.seta(t, [6.1]); css('#tagia', { display: t < 25.4 ? 'block' : 'none' }); }],
+  overlays: [t => { Shared.seta(t, [6.1]); css('#tagia', { display: t < 25.6 ? 'block' : 'none' }); }],
   captions: [
-    { s: 0.25, e: 1.85, text: 'Tá caro comprar picanha?' },
-    { s: 3.45, e: 6.0, text: 'Aí você volta pra casa com o carrinho vazio.' },
-    { s: 6.65, e: 9.5, text: 'E se, antes de sair de casa,' },
-    { s: 9.6, e: 14.4, text: 'você soubesse que o Mercado da Esquina costuma baixar a picanha às sextas?' },
+    { s: 0.25, e: 1.75, text: 'Tá caro comprar picanha?' },
+    { s: 3.45, e: 5.9, text: 'Aí você volta pra casa com o carrinho vazio.' },
+    { s: 6.65, e: 9.3, text: 'E se, antes de sair de casa,' },
+    { s: 9.3, e: 12.6, text: 'você soubesse que o Mercado da Esquina costuma baixar a picanha às sextas?' },
     { s: 16.55, e: 17.8, text: 'Aí, sim.' },
-    { s: 18.45, e: 23.4, text: 'Lê a nota, monta a sua cesta e avisa quando e onde vale comprar.' },
-    { s: 23.55, e: 25.3, text: 'É isso que a gente está construindo.' },
+    { s: 18.35, e: 23.45, text: 'Lê a nota, monta a sua cesta e avisa quando e onde vale comprar.' },
+    { s: 23.65, e: 25.55, text: 'É isso que a gente está construindo.' },
   ],
-  // narração: trechos (frases) do WAV da Stephanie reposicionados no tempo do vídeo
+  // narração Avatar V da Stephanie: frases isoladas por silêncio e reposicionadas no tempo do vídeo
   vo: [
-    { from: 0.25, to: 1.85, t: 0.2 }, { from: 3.70, to: 6.20, t: 3.4 }, { from: 7.60, to: 15.35, t: 6.6 },
-    { from: 18.20, to: 19.05, t: 16.52 }, { from: 20.10, to: 25.10, t: 18.4 }, { from: 25.45, to: 27.20, t: 23.5 },
-    { from: 27.85, to: 30.75, t: 25.6 },
+    { from: 0.26, to: 1.80, t: 0.18 }, { from: 2.90, to: 5.36, t: 3.37 }, { from: 6.30, to: 12.28, t: 6.57 },
+    { from: 13.82, to: 14.80, t: 16.5 }, { from: 15.63, to: 20.97, t: 18.29 }, { from: 21.27, to: 23.26, t: 23.6 },
+    { from: 24.14, to: 27.60, t: 25.8 },
   ].map(v => ({ file: 'assets/heygen/v1_narradora.wav', ...v })),
   sfx: [
     { t: 0.0, name: 'whoosh', gain: .5 }, { t: 2.05, name: 'bipe_grave', gain: .8 },
@@ -249,7 +254,7 @@ window.VIDEO = {
     { t: 13.95, name: 'cha_ching', gain: .8 },
     ...[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ({ t: 16.2 + i * .13, name: 'k:impacto', gain: .3 })),
     { t: 21.0, name: 'whoosh', gain: .35 },
-    { t: 25.4, name: 'k:sino', gain: .5 },
+    { t: 25.6, name: 'k:sino', gain: .5 },
   ],
 };
 window.__seek(0);
