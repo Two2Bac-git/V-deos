@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Gaste Pouco">
+  <!-- Reconstrução vetorial fiel à referência (logo-referencia.png): quadrado de leitura do QR + seta do preço que desce -->
+  <rect x="11" y="11" width="78" height="78" rx="25" fill="#F7FAF8" stroke="#173D45" stroke-width="11"/>
+  <g fill="none" stroke="#77C9A5" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 30 V66"/>
+    <path d="M35 51 L50 66 L65 51"/>
+  </g>
+</svg>

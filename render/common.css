@@ -1,0 +1,67 @@
+@font-face{font-family:"Familjen Grotesk";font-weight:400;src:url(../assets/brand/fonts/familjen-grotesk-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Familjen Grotesk";font-weight:700;src:url(../assets/brand/fonts/familjen-grotesk-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;src:url(../assets/brand/fonts/inter-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;src:url(../assets/brand/fonts/inter-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;src:url(../assets/brand/fonts/inter-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:700;src:url(../assets/brand/fonts/inter-latin-700-normal.woff2) format("woff2")}
+
+:root{
+  --verde:#173D45; --menta:#77C9A5; --menta-escura:#2F8A66; --coral:#F47B62;
+  --papel:#F7FAF8; --grafite:#14252A;
+  --safe-top:150px; --safe-bottom:250px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--papel);color:var(--grafite);
+  font-family:"Inter",sans-serif;-webkit-font-smoothing:antialiased}
+.stage{position:absolute;inset:0;overflow:hidden}
+.scene{position:absolute;inset:0;display:none}
+.scene.on{display:block}
+.fill-papel{background:var(--papel)} .fill-verde{background:var(--verde);color:var(--papel)}
+
+/* Tipografia */
+.tt{font-family:"Familjen Grotesk",sans-serif;font-weight:700;line-height:.98;letter-spacing:-.03em}
+.tt-400{font-family:"Familjen Grotesk",sans-serif;font-weight:400;line-height:1;letter-spacing:-.02em}
+.num{font-variant-numeric:tabular-nums}
+.label{font:600 30px/1 "Inter";letter-spacing:.08em;text-transform:uppercase}
+
+/* Zona segura: todo texto vive aqui dentro */
+.safe{position:absolute;left:72px;right:72px;top:var(--safe-top);bottom:var(--safe-bottom)}
+
+/* Legenda queimada */
+.cap{position:absolute;left:60px;right:60px;bottom:calc(var(--safe-bottom) + 20px);display:flex;justify-content:center}
+.cap span{background:var(--grafite);color:var(--papel);font:700 50px/1.22 "Inter";padding:14px 26px;border-radius:18px;
+  text-align:center;max-width:960px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.cap:empty{display:none}
+
+/* Selos obrigatórios */
+.selo{position:absolute;font:700 30px/1 "Inter";letter-spacing:.1em;color:var(--papel);background:var(--grafite);
+  padding:14px 20px;border-radius:12px;border:3px solid var(--papel)}
+.ilustr{position:absolute;right:72px;top:calc(var(--safe-top) + 10px);font:600 26px/1 "Inter";letter-spacing:.08em;
+  color:var(--grafite);background:rgba(247,250,248,.92);padding:10px 16px;border-radius:10px;border:2px solid var(--grafite)}
+.fonte{position:absolute;left:72px;right:72px;font:500 30px/1.3 "Inter";color:var(--grafite)}
+.tag-ia{position:absolute;left:72px;top:calc(var(--safe-top) + 10px);font:600 26px/1 "Inter";color:var(--papel);
+  background:rgba(20,37,42,.8);padding:10px 16px;border-radius:10px}
+
+/* Celular + tela do app (recriação em 1080p do Figma, mercados fictícios) */
+.phone{position:absolute;width:640px;height:1300px;border-radius:84px;background:var(--grafite);padding:22px;
+  box-shadow:0 40px 90px rgba(20,37,42,.28)}
+.phone .screen{position:relative;width:100%;height:100%;border-radius:64px;background:#F2F5F4;overflow:hidden;padding:96px 44px 40px}
+.phone .selo{top:26px;left:50%;transform:translateX(-50%);white-space:nowrap}
+.app-kicker{font:500 26px/1 "Inter";color:var(--menta-escura);letter-spacing:.02em;text-transform:uppercase;margin-top:40px}
+.app-title{font:700 48px/1.1 "Inter";color:var(--verde);margin:10px 0 34px}
+.card-oferta{background:#FDD6CC;border-radius:34px;padding:30px 32px;margin-bottom:26px}
+.card-oferta .k{font:700 27px/1 "Inter";color:#C4523A}
+.card-oferta .t{font:700 38px/1.18 "Inter";color:var(--grafite);margin:18px 0 12px}
+.card-oferta .s{font:500 26px/1.35 "Inter";color:var(--grafite)}
+.row{display:flex;align-items:center;gap:24px;padding:26px 0;border-bottom:2px solid #DDE5E2}
+.row .dot{width:84px;height:84px;border-radius:50%;background:#BDE7D4;flex:none}
+.row .n{font:700 34px/1.15 "Inter";color:var(--verde)}
+.row .d{font:400 26px/1.3 "Inter";color:var(--grafite)}
+.row .p{margin-left:auto;font:700 38px/1 "Inter";color:var(--verde);font-variant-numeric:tabular-nums;white-space:nowrap}
+.row.best{background:rgba(119,201,165,.18);border-radius:24px;border-bottom:none;padding:26px 18px;margin:0 -18px}
+.app-foot{position:absolute;left:44px;right:44px;bottom:48px;font:400 24px/1.4 "Inter";text-align:center;color:var(--grafite)}
+
+/* Logo */
+.logo-v{display:flex;flex-direction:column;align-items:center}
+.logo-v .disc{background:var(--papel);border-radius:50%;display:grid;place-items:center}
+.logo-v .wm{font-family:"Familjen Grotesk";font-weight:700;letter-spacing:-.03em;line-height:1}
