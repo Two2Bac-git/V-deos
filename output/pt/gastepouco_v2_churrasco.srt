@@ -1,0 +1,39 @@
+1
+00:00:00,200 --> 00:00:02,200
+Lu: Nossa, que picanha boa!
+
+2
+00:00:02,200 --> 00:00:04,400
+Ana: Né? Quanto você pagou na sua?
+
+3
+00:00:04,400 --> 00:00:06,800
+Lu: R$ 139,90 o quilo, no mercado do centro.
+
+4
+00:00:06,800 --> 00:00:09,000
+Ana: Essa aqui foi R$ 99,90.
+
+5
+00:00:09,000 --> 00:00:11,000
+Lu: Sério? Onde?
+
+6
+00:00:11,000 --> 00:00:14,000
+Ana: No Mercado da Esquina. Na sexta costuma baixar.
+
+7
+00:00:14,000 --> 00:00:16,500
+Ana: Eu leio o QR code da nota e o app monta a minha cesta.
+
+8
+00:00:16,500 --> 00:00:19,000
+Ana: Aí ele compara os mercados que eu uso.
+
+9
+00:00:19,000 --> 00:00:21,000
+Lu: Me passa esse app!
+
+10
+00:00:21,000 --> 00:00:24,000
+Ana: Tá quase pronto. Segue o @gastepouco.

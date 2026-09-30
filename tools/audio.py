@@ -134,6 +134,14 @@ def main():
         vo = read_wav(sys.argv[sys.argv.index('--vo') + 1])
         at = float(sys.argv[sys.argv.index('--vo-at') + 1]) if '--vo-at' in sys.argv else 0.0
         i = int(at * SR); total *= 0.7; total[i:i + len(vo)] += vo[:len(total) - i]
+    # falas das avatares declaradas no vídeo (WAV 48 kHz extraído dos MP4 do HeyGen); ausentes são ignoradas
+    root = Path(__file__).resolve().parent.parent
+    vos = [v for v in meta.get('vo', []) if (root / v['file']).exists()]
+    if vos:
+        total *= 0.7
+        for v in vos:
+            x = read_wav(root / v['file']) * v.get('gain', 1.0); i = int(v['t'] * SR)
+            total[i:i + len(x)] += x[:len(total) - i]
     total = total[:int(meta['duration'] * SR)]
     peak = np.abs(total).max() or 1
     write_wav(out + '.audio.wav', total * (0.89 / peak))

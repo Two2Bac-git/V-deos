@@ -1,0 +1,165 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Gaste Pouco — V2 Churrasco</title>
+<link rel="stylesheet" href="common.css">
+<style>
+/* Quintal de churrasco ilustrado (fundo único; plano e contraplano deslocam o cenário) */
+.quintal{position:absolute;top:0;left:-240px;width:1560px;height:1920px;background:linear-gradient(180deg,#E4F2EC 0,#F7FAF8 58%);overflow:hidden}
+.quintal .muro{position:absolute;left:0;right:0;top:760px;height:560px;
+  background:repeating-linear-gradient(90deg,#2B5A63 0 92px,#24535C 92px 100px)}
+.quintal .muro:before{content:"";position:absolute;left:0;right:0;top:-26px;height:26px;background:#173D45}
+.quintal .chao{position:absolute;left:0;right:0;top:1320px;bottom:0;background:#CFE3DA}
+.quintal .varal{position:absolute;left:0;right:0;top:300px;height:200px}
+.quintal .luz{position:absolute;width:30px;height:30px;border-radius:50%;background:#F7FAF8;box-shadow:0 0 30px 10px rgba(247,250,248,.9)}
+.churras{position:absolute;top:980px;width:420px;height:360px}
+.churras .caixa{position:absolute;left:0;right:0;top:110px;height:170px;background:var(--grafite);border-radius:18px}
+.churras .grelha{position:absolute;left:-10px;right:-10px;top:96px;height:16px;background:#3E5358;border-radius:8px}
+.churras .brasa{position:absolute;top:84px;height:22px;border-radius:12px;background:var(--coral)}
+.churras .pe{position:absolute;top:280px;width:22px;height:80px;background:var(--grafite)}
+.fumaca{position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(247,250,248,.75)}
+.pessoa{position:absolute;bottom:250px;width:760px;height:1180px}
+.pessoa .pip{inset:0;border:none;border-radius:0;box-shadow:none;background:transparent}
+.pessoa .clip-ph{background:transparent}
+.pessoa .clip-ph .cabeca{width:36%;background:#6FA592}.pessoa .clip-ph .corpo{width:78%;height:46%;background:#6FA592}
+.pessoa .clip-ph .lbl{top:auto;bottom:40%;font-size:34px;color:var(--grafite)}
+.phone{width:640px;height:1180px;left:220px;top:250px}
+.phone .screen{padding:96px 36px 40px}
+.card-oferta .num{white-space:nowrap}
+.row{gap:18px}.row .dot{width:54px;height:54px}.row>div:nth-child(2){flex:1;min-width:0}.row .p{flex:none}
+.row .n{font-size:30px}.row .p{font-size:34px}.row .x{font:600 24px/1.3 Inter;color:var(--menta-escura)}
+.cap b{color:var(--menta);font-weight:700}
+</style></head><body>
+<div class="stage">
+
+<!-- Cena única do churrasco: o renderizador troca o enquadramento (Lu ↔ Ana, médio ↔ close) -->
+<div class="scene" id="quintal">
+  <div class="quintal" id="bg">
+    <div class="varal" id="varal"></div>
+    <div class="muro"></div><div class="chao"></div>
+    <div class="churras" id="churras" style="left:1020px">
+      <div class="brasa" style="left:40px;width:120px"></div><div class="brasa" style="left:190px;width:90px"></div><div class="brasa" style="left:300px;width:80px"></div>
+      <div class="grelha"></div><div class="caixa"></div><div class="pe" style="left:50px"></div><div class="pe" style="right:50px"></div>
+    </div>
+    <div id="fumacas"></div>
+  </div>
+  <div class="pessoa" id="lu">
+    <div class="pip"><div class="clip-ph"><div class="cabeca"></div><div class="corpo"></div><div class="lbl">LU (avatar)</div></div>
+      <video class="clip" data-start="0" data-who="lu" src="../assets/heygen/v2_lu.webm" preload="auto"></video></div></div>
+  <div class="pessoa" id="ana">
+    <div class="pip"><div class="clip-ph"><div class="cabeca"></div><div class="corpo"></div><div class="lbl">ANA (avatar)</div></div>
+      <video class="clip" data-start="0" data-who="ana" src="../assets/heygen/v2_ana.webm" preload="auto"></video></div></div>
+  <div class="ilustr" id="ilu">PREÇOS ILUSTRATIVOS</div>
+</div>
+
+<!-- Inserção 11,0–14,0: alerta no app -->
+<div class="scene fill-papel" id="ins1">
+  <div class="phone"><div class="screen">
+    <div class="selo">SIMULAÇÃO</div>
+    <div class="app-kicker">Perto de você</div>
+    <div class="app-title">Ofertas</div>
+    <div class="card-oferta c1">
+      <div class="k">Costuma baixar às sextas</div>
+      <div class="t">Picanha · <span class="num">R$ 99,90/kg</span><br>no Mercado da Esquina</div>
+      <div class="s">Em 5 das últimas 6 sextas saiu por até <span class="num">R$ 99,90/kg</span>.</div>
+    </div>
+    <div class="app-foot">Estimativa com notas lidas por quem mora perto. O preço não é garantido pela loja.</div>
+  </div></div>
+</div>
+
+<!-- Inserção 16,5–19,0: comparação da cesta -->
+<div class="scene fill-papel" id="ins2">
+  <div class="phone"><div class="screen">
+    <div class="selo">SIMULAÇÃO</div>
+    <div class="app-kicker">Sua cesta do mês</div>
+    <div class="app-title">Onde sai mais em conta</div>
+    <div class="row r2"><div class="dot"></div><div><div class="n">Mercado da Esquina</div><div class="d">a pé</div></div><div class="p">R$ 312,40</div></div>
+    <div class="row r2"><div class="dot"></div><div><div class="n">Mercadinho do Bairro</div><div class="d">a pé</div></div><div class="p">R$ 298,70</div></div>
+    <div class="row r2" id="best2"><div class="dot"></div><div><div class="n">Atacarejo da Avenida</div><div class="d">cesta R$ 271,90</div><div class="x">+ ônibus ida e volta R$ 9,00</div></div><div class="p">R$ 280,90</div></div>
+    <div class="app-foot">Mesmos itens e quantidades. Deslocamento incluído.</div>
+  </div></div>
+</div>
+
+<!-- 24,0–28,0 tela final -->
+<div class="scene fill-verde" id="fim"></div>
+
+<div class="tag-ia" id="tagia">Vídeo com avatares de IA</div>
+<div id="cap" class="cap"></div>
+</div>
+<script src="engine.js"></script>
+<script src="shared.js"></script>
+<script>
+const { k, E, css, lerp, shake, $ } = A;
+document.getElementById('fim').innerHTML = Shared.endcardHTML();
+$('#varal').innerHTML = Array.from({ length: 16 }, (_, i) => `<div class="luz" style="left:${40 + i * 96}px;top:${60 + Math.sin(i / 15 * Math.PI) * 80}px"></div>`).join('')
+  + '<svg style="position:absolute;inset:0" viewBox="0 0 1560 200" preserveAspectRatio="none"><path d="M0 60 Q780 220 1560 60" fill="none" stroke="#173D45" stroke-width="4"/></svg>';
+$('#fumacas').innerHTML = Array.from({ length: 6 }, (_, i) => `<div class="fumaca" data-i="${i}"></div>`).join('');
+
+// Plano e contraplano. Cada fala define quem está em quadro e o enquadramento.
+// who: 'lu' | 'ana' | null (inserção) · shot: 'medio' | 'close'
+const SHOTS = [
+  { s: 0.0, e: 2.2, who: 'lu', shot: 'medio' },
+  { s: 2.2, e: 4.4, who: 'ana', shot: 'medio' },
+  { s: 4.4, e: 6.8, who: 'lu', shot: 'close' },
+  { s: 6.8, e: 9.0, who: 'ana', shot: 'close' },
+  { s: 9.0, e: 11.0, who: 'lu', shot: 'close' },
+  { s: 14.0, e: 16.5, who: 'ana', shot: 'medio' },
+  { s: 19.0, e: 21.0, who: 'lu', shot: 'close' },
+  { s: 21.0, e: 24.0, who: 'ana', shot: 'medio' },
+];
+function enquadra(t) {
+  const sh = SHOTS.find(x => t >= x.s && t < x.e); if (!sh) return;
+  const lt = t - sh.s, close = sh.shot === 'close';
+  const drift = lt * 6;  // Ken Burns lento dentro de cada plano
+  const z = (close ? 1.32 : 1.0) + lt * .012;
+  // Lu à direita com a churrasqueira atrás dela à esquerda; Ana à esquerda com o fundo espelhado
+  // contraplano: o quintal é espelhado, então a churrasqueira troca de lado
+  const bgX = sh.who === 'lu' ? -40 - drift : 40 + drift, flip = sh.who === 'lu' ? 1 : -1;
+  css('#bg', { transform: `translateX(${bgX}px) scale(${flip * (1 + (z - 1) * .5)}, ${1 + (z - 1) * .5})`, transformOrigin: '50% 70%' });
+  css('#lu', { display: sh.who === 'lu' ? 'block' : 'none', left: '250px', transform: `scale(${z})`, transformOrigin: '50% 30%' });
+  css('#ana', { display: sh.who === 'ana' ? 'block' : 'none', left: '70px', transform: `scale(${z})`, transformOrigin: '50% 30%' });
+  document.querySelectorAll('.fumaca').forEach(f => {
+    const i = +f.dataset.i, p = ((t * .35 + i / 6) % 1);
+    css(f, { left: (1150 + Math.sin(p * 6 + i) * 40) + 'px', top: lerp(980, 380, p) + 'px', opacity: .7 * (1 - p), transform: `scale(${lerp(.6, 2.2, p)})` });
+  });
+  css('#ilu', { display: t >= 4.4 && t < 9.0 ? 'block' : 'none' });
+}
+
+window.VIDEO = {
+  duration: 28,
+  scenes: [
+    { id: 'quintal', start: 0, end: 11.0, render(lt, d, t) { enquadra(t); } },
+    { id: 'ins1', start: 11.0, end: 14.0, render(t) { css('.c1', { transform: `scale(${lerp(.85, 1, k(t, .1, .45, E.back))})`, opacity: k(t, .1, .25) }); } },
+    // reaproveita o mesmo nó do quintal entre 14 e 16,5 e entre 19 e 24
+    { id: 'ins2', start: 16.5, end: 19.0, render(t) {
+      document.querySelectorAll('.r2').forEach((r, i) => css(r, { opacity: k(t, .1 + i * .3, .4 + i * .3), transform: `translateY(${lerp(60, 0, k(t, .1 + i * .3, .45 + i * .3))}px)` }));
+      $('#best2').classList.toggle('best', t > 1.3);
+    }},
+    { id: 'fim', start: 24.0, end: 28.01, render(t) { Shared.endcardRender($('#fim'), t); } },
+  ],
+  overlays: [t => {
+    const inQuintal = SHOTS.some(x => t >= x.s && t < x.e);
+    const q = document.getElementById('quintal'); q.classList.toggle('on', inQuintal); if (inQuintal) enquadra(t);
+    css('#tagia', { display: t < 24 ? 'block' : 'none' });
+  }],
+  captions: [
+    { s: 0.2, e: 2.2, text: '<b>Lu:</b> Nossa, que picanha boa!' },
+    { s: 2.2, e: 4.4, text: '<b>Ana:</b> Né? Quanto você pagou na sua?' },
+    { s: 4.4, e: 6.8, text: '<b>Lu:</b> R$ 139,90 o quilo, no mercado do centro.' },
+    { s: 6.8, e: 9.0, text: '<b>Ana:</b> Essa aqui foi R$ 99,90.' },
+    { s: 9.0, e: 11.0, text: '<b>Lu:</b> Sério? Onde?' },
+    { s: 11.0, e: 14.0, text: '<b>Ana:</b> No Mercado da Esquina. Na sexta costuma baixar.' },
+    { s: 14.0, e: 16.5, text: '<b>Ana:</b> Eu leio o QR code da nota e o app monta a minha cesta.' },
+    { s: 16.5, e: 19.0, text: '<b>Ana:</b> Aí ele compara os mercados que eu uso.' },
+    { s: 19.0, e: 21.0, text: '<b>Lu:</b> Me passa esse app!' },
+    { s: 21.0, e: 24.0, text: '<b>Ana:</b> Tá quase pronto. Segue o @gastepouco.' },
+  ],
+  // falas: um WAV por avatar, com as falas nos tempos acima (extraído do MP4 do HeyGen)
+  vo: [{ file: 'assets/heygen/v2_lu.wav', t: 0 }, { file: 'assets/heygen/v2_ana.wav', t: 0 }],
+  sfx: [
+    { t: 0.0, name: 'brasa', gain: .6 }, { t: 12.0, name: 'brasa', gain: .5 },
+    { t: 4.9, name: 'bipe' }, { t: 7.4, name: 'cha_ching', gain: .6 },
+    { t: 11.0, name: 'whoosh', gain: .5 }, { t: 14.6, name: 'bipe' }, { t: 16.5, name: 'whoosh', gain: .5 },
+    { t: 24.0, name: 'acorde' },
+  ],
+};
+window.__seek(0);
+</script></body></html>
