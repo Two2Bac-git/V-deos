@@ -10,6 +10,6 @@ node tools/render.js render/$V.html build/$V
 .venv/bin/python tools/audio.py build/$V.meta.json build/$V "$@"
 NAME=$(.venv/bin/python -c "import json;print(json.load(open('render/names.json'))['$V'])")
 "$FFMPEG" -y -loglevel error -i build/$V.video.mp4 -i build/$V.audio.wav \
-  -c:v copy -c:a aac -b:a 192k -ar 48000 -shortest -movflags +faststart output/pt/$NAME.mp4
+  -c:v copy -af "loudnorm=I=-14:TP=-1.5:LRA=11" -c:a aac -b:a 192k -ar 48000 -shortest -movflags +faststart output/pt/$NAME.mp4
 cp build/$V.srt output/pt/$NAME.srt
 echo "pronto: output/pt/$NAME.mp4"

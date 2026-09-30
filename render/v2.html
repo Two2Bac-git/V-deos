@@ -27,6 +27,12 @@
 .row{gap:18px}.row .dot{width:54px;height:54px}.row>div:nth-child(2){flex:1;min-width:0}.row .p{flex:none}
 .row .n{font-size:30px}.row .p{font-size:34px}.row .x{font:600 24px/1.3 Inter;color:var(--menta-escura)}
 .cap b{color:var(--menta);font-weight:700}
+/* mesa em primeiro plano: esconde o que a avatar tem na frente (notebook) e ambienta o churrasco */
+.mesa{position:absolute;left:-40px;right:-40px;top:1340px;bottom:0;background:linear-gradient(180deg,#3B6A70 0,#2B5A63 40px,#24535C 100%);
+  box-shadow:0 -10px 30px rgba(20,37,42,.25)}
+.mesa:before{content:"";position:absolute;left:0;right:0;top:0;height:14px;background:#4E7F84}
+.tabua{position:absolute;top:-70px;width:420px;height:130px;border-radius:65px;background:#C9A77C;box-shadow:inset 0 -10px 0 #B08D63}
+.tabua svg{position:absolute;top:-10px}
 </style></head><body>
 <div class="stage">
 
@@ -43,6 +49,10 @@
   </div>
   <div class="pessoa" id="lu"><div class="pip"><div class="clip-ph"><div class="cabeca"></div><div class="corpo"></div><div class="lbl">LU (avatar)</div></div></div></div>
   <div class="pessoa" id="ana"><div class="pip"><div class="clip-ph"><div class="cabeca"></div><div class="corpo"></div><div class="lbl">ANA (avatar)</div></div></div></div>
+  <div class="mesa"><div class="tabua" id="tabua" style="left:560px">
+    <svg viewBox="0 0 100 60" style="left:40px;width:170px"><path d="M6 44 Q10 12 50 8 Q90 10 94 40 Q70 54 50 52 Q26 54 6 44Z" fill="#C8605A"/><path d="M8 40 Q30 50 50 48 Q72 50 92 38 L94 44 Q70 58 50 56 Q26 58 6 48Z" fill="#F4E6D8"/></svg>
+    <svg viewBox="0 0 100 60" style="left:200px;width:170px;transform:rotate(-8deg)"><path d="M6 44 Q10 12 50 8 Q90 10 94 40 Q70 54 50 52 Q26 54 6 44Z" fill="#B9544F"/><path d="M8 40 Q30 50 50 48 Q72 50 92 38 L94 44 Q70 58 50 56 Q26 58 6 48Z" fill="#F4E6D8"/></svg>
+  </div></div>
   <div class="ilustr" id="ilu">PREÇOS ILUSTRATIVOS</div>
 </div>
 
@@ -89,32 +99,39 @@ $('#varal').innerHTML = Array.from({ length: 16 }, (_, i) => `<div class="luz" s
   + '<svg style="position:absolute;inset:0" viewBox="0 0 1560 200" preserveAspectRatio="none"><path d="M0 60 Q780 220 1560 60" fill="none" stroke="#173D45" stroke-width="4"/></svg>';
 $('#fumacas').innerHTML = Array.from({ length: 6 }, (_, i) => `<div class="fumaca" data-i="${i}"></div>`).join('');
 
-// Um clipe HeyGen (WebM com transparência) por fala; t = início da fala no vídeo.
-const CLIPS = [
-  { id: 'v2_01_lu', who: 'lu', t: 0.2 }, { id: 'v2_02_ana', who: 'ana', t: 2.3 },
-  { id: 'v2_03_lu', who: 'lu', t: 4.5 }, { id: 'v2_04_ana', who: 'ana', t: 6.9 },
-  { id: 'v2_05_lu', who: 'lu', t: 9.1 }, { id: 'v2_06_ana', who: 'ana', t: 11.1 },
-  { id: 'v2_07_lu', who: 'lu', t: 19.1 }, { id: 'v2_08_ana', who: 'ana', t: 21.1 },
-];
+// Um clipe HeyGen (WebM com transparência) por fala. A linha do tempo inteira sai das durações reais
+// medidas nos arquivos: cada fala entra 0,45 s antes do fim da anterior (corta o silêncio que o HeyGen
+// deixa no início e no fim), como numa conversa de verdade. v2_06 ainda estimada (arquivo pendente).
+const DUR = { v2_01_lu: 2.52, v2_02_ana: 2.82, v2_03_lu: 5.13, v2_04_ana: 3.49, v2_05_lu: 1.92, v2_06_ana: 7.5, v2_07_lu: 1.40, v2_08_ana: 4.13 };
+const SOBREPOE = .45, VOZ = .22;  // VOZ: silêncio inicial típico do clipe antes da primeira sílaba
+const CLIPS = []; { let t = 0;
+  for (const id of Object.keys(DUR)) { CLIPS.push({ id, who: id.endsWith('lu') ? 'lu' : 'ana', t: +t.toFixed(2), d: DUR[id] }); t += DUR[id] - SOBREPOE; } }
+const C = Object.fromEntries(CLIPS.map(c => [c.id.slice(3, 5), c]));  // C['03'] etc.
+const fala = n => C[n].t + VOZ, fimFala = n => C[n].t + C[n].d - .25;
+// a fala 06 tem três frases: alerta (inserção) · Ana em quadro · comparação (inserção)
+const F6 = [0, .40, .76, 1].map(f => fala('06') + f * (C['06'].d - VOZ - .25));
+const FIM = +(fimFala('08') + .15).toFixed(2), DURACAO = +(FIM + 4).toFixed(2);
+
 CLIPS.forEach(c => document.querySelector('#' + c.who + ' .pip').insertAdjacentHTML('beforeend',
   `<video class="clip" id="${c.id}" data-start="${c.t}" src="../assets/heygen/${c.id}.webm" preload="auto" style="display:none"></video>`));
 // clipe visível: o último que começou para essa personagem (fica no último quadro entre falas)
 function clipAtivo(who, t) {
-  const cs = CLIPS.filter(c => c.who === who && c.t <= t + .25);
+  // só clipes que carregaram (arquivo pendente → mantém o último quadro da fala anterior)
+  const cs = CLIPS.filter(c => c.who === who && c.t <= t + .05 && document.getElementById(c.id).dataset.ok === '1');
   return (cs[cs.length - 1] || CLIPS.find(c => c.who === who)).id;
 }
 
 // Plano e contraplano. Cada fala define quem está em quadro e o enquadramento.
 // who: 'lu' | 'ana' | null (inserção) · shot: 'medio' | 'close'
 const SHOTS = [
-  { s: 0.0, e: 2.2, who: 'lu', shot: 'medio' },
-  { s: 2.2, e: 4.4, who: 'ana', shot: 'medio' },
-  { s: 4.4, e: 6.8, who: 'lu', shot: 'close' },
-  { s: 6.8, e: 9.0, who: 'ana', shot: 'close' },
-  { s: 9.0, e: 11.0, who: 'lu', shot: 'close' },
-  { s: 14.0, e: 16.5, who: 'ana', shot: 'medio' },
-  { s: 19.0, e: 21.0, who: 'lu', shot: 'close' },
-  { s: 21.0, e: 24.0, who: 'ana', shot: 'medio' },
+  { s: 0, e: fala('02'), who: 'lu', shot: 'medio' },
+  { s: fala('02'), e: fala('03'), who: 'ana', shot: 'medio' },
+  { s: fala('03'), e: fala('04'), who: 'lu', shot: 'close' },
+  { s: fala('04'), e: fala('05'), who: 'ana', shot: 'close' },
+  { s: fala('05'), e: F6[0], who: 'lu', shot: 'close' },
+  { s: F6[1], e: F6[2], who: 'ana', shot: 'medio' },
+  { s: fala('07'), e: fala('08'), who: 'lu', shot: 'close' },
+  { s: fala('08'), e: FIM, who: 'ana', shot: 'medio' },
 ];
 function enquadra(t) {
   const sh = SHOTS.find(x => t >= x.s && t < x.e); if (!sh) return;
@@ -125,54 +142,56 @@ function enquadra(t) {
   // contraplano: o quintal é espelhado, então a churrasqueira troca de lado
   const bgX = sh.who === 'lu' ? -40 - drift : 40 + drift, flip = sh.who === 'lu' ? 1 : -1;
   css('#bg', { transform: `translateX(${bgX}px) scale(${flip * (1 + (z - 1) * .5)}, ${1 + (z - 1) * .5})`, transformOrigin: '50% 70%' });
+  // a Jeyla vem enquadrada mais de perto no HeyGen: escala menor para as duas ficarem do mesmo tamanho
+  const za = z * .8;
   css('#lu', { display: sh.who === 'lu' ? 'block' : 'none', left: '250px', transform: `scale(${z})`, transformOrigin: '50% 30%' });
-  css('#ana', { display: sh.who === 'ana' ? 'block' : 'none', left: '70px', transform: `scale(${z})`, transformOrigin: '50% 30%' });
+  css('#ana', { display: sh.who === 'ana' ? 'block' : 'none', left: '70px', transform: `translateY(60px) scale(${za})`, transformOrigin: '50% 30%' });
+  css('#tabua', { left: (sh.who === 'lu' ? 40 : 600) + 'px' });
   ['lu', 'ana'].forEach(w => { const a = clipAtivo(w, t);
     CLIPS.filter(c => c.who === w).forEach(c => { const v = document.getElementById(c.id); if (v.dataset.ok === '1') v.style.display = c.id === a ? 'block' : 'none'; }); });
   document.querySelectorAll('.fumaca').forEach(f => {
     const i = +f.dataset.i, p = ((t * .35 + i / 6) % 1);
     css(f, { left: (1150 + Math.sin(p * 6 + i) * 40) + 'px', top: lerp(980, 380, p) + 'px', opacity: .7 * (1 - p), transform: `scale(${lerp(.6, 2.2, p)})` });
   });
-  css('#ilu', { display: t >= 4.4 && t < 9.0 ? 'block' : 'none' });
+  css('#ilu', { display: t >= fala('03') && t < fala('05') ? 'block' : 'none' });
 }
 
 window.VIDEO = {
-  duration: 28,
+  duration: DURACAO,
   scenes: [
-    { id: 'quintal', start: 0, end: 11.0, render(lt, d, t) { enquadra(t); } },
-    { id: 'ins1', start: 11.0, end: 14.0, render(t) { css('.c1', { transform: `scale(${lerp(.85, 1, k(t, .1, .45, E.back))})`, opacity: k(t, .1, .25) }); } },
-    // reaproveita o mesmo nó do quintal entre 14 e 16,5 e entre 19 e 24
-    { id: 'ins2', start: 16.5, end: 19.0, render(t) {
+    { id: 'quintal', start: 0, end: F6[0], render(lt, d, t) { enquadra(t); } },
+    { id: 'ins1', start: F6[0], end: F6[1], render(t) { css('.c1', { transform: `scale(${lerp(.85, 1, k(t, .1, .45, E.back))})`, opacity: k(t, .1, .25) }); } },
+    { id: 'ins2', start: F6[2], end: fala('07'), render(t) {
       document.querySelectorAll('.r2').forEach((r, i) => css(r, { opacity: k(t, .1 + i * .3, .4 + i * .3), transform: `translateY(${lerp(60, 0, k(t, .1 + i * .3, .45 + i * .3))}px)` }));
-      $('#best2').classList.toggle('best', t > 1.3);
+      $('#best2').classList.toggle('best', t > 1.2);
     }},
-    { id: 'fim', start: 24.0, end: 28.01, render(t) { Shared.endcardRender($('#fim'), t); } },
+    { id: 'fim', start: FIM, end: DURACAO + .01, render(t) { Shared.endcardRender($('#fim'), t); } },
   ],
   overlays: [t => {
     const inQuintal = SHOTS.some(x => t >= x.s && t < x.e);
     const q = document.getElementById('quintal'); q.classList.toggle('on', inQuintal); if (inQuintal) enquadra(t);
-    css('#tagia', { display: t < 24 ? 'block' : 'none' });
+    css('#tagia', { display: t < FIM ? 'block' : 'none' });
   }],
   captions: [
-    { s: 0.2, e: 2.2, text: '<b>Lu:</b> Nossa, que picanha boa!' },
-    { s: 2.2, e: 4.4, text: '<b>Ana:</b> Né? Quanto você pagou na sua?' },
-    { s: 4.4, e: 6.8, text: '<b>Lu:</b> R$ 139,90 o quilo, no mercado do centro.' },
-    { s: 6.8, e: 9.0, text: '<b>Ana:</b> Essa aqui foi R$ 99,90.' },
-    { s: 9.0, e: 11.0, text: '<b>Lu:</b> Sério? Onde?' },
-    { s: 11.0, e: 14.0, text: '<b>Ana:</b> No Mercado da Esquina. Na sexta costuma baixar.' },
-    { s: 14.0, e: 16.5, text: '<b>Ana:</b> Eu leio o QR code da nota e o app monta a minha cesta.' },
-    { s: 16.5, e: 19.0, text: '<b>Ana:</b> Aí ele compara os mercados que eu uso.' },
-    { s: 19.0, e: 21.0, text: '<b>Lu:</b> Me passa esse app!' },
-    { s: 21.0, e: 24.0, text: '<b>Ana:</b> Tá quase pronto. Segue o @gastepouco.' },
-  ],
-  // falas: um WAV por avatar, com as falas nos tempos acima (extraído do MP4 do HeyGen)
+    { s: fala('01'), e: fimFala('01'), text: '<b>Lu:</b> Nossa, que picanha boa!' },
+    { s: fala('02'), e: fimFala('02'), text: '<b>Ana:</b> Né? Quanto você pagou na sua?' },
+    { s: fala('03'), e: fimFala('03'), text: '<b>Lu:</b> R$ 139,90 o quilo, no mercado do centro.' },
+    { s: fala('04'), e: fimFala('04'), text: '<b>Ana:</b> Essa aqui foi R$ 99,90.' },
+    { s: fala('05'), e: fimFala('05'), text: '<b>Lu:</b> Sério? Onde?' },
+    { s: F6[0], e: F6[1], text: '<b>Ana:</b> No Mercado da Esquina. Na sexta costuma baixar.' },
+    { s: F6[1], e: F6[2], text: '<b>Ana:</b> Eu leio o QR code da nota e o app monta a minha cesta.' },
+    { s: F6[2], e: F6[3], text: '<b>Ana:</b> Aí ele compara os mercados que eu uso.' },
+    { s: fala('07'), e: fimFala('07'), text: '<b>Lu:</b> Me passa esse app!' },
+    { s: fala('08'), e: fimFala('08'), text: '<b>Ana:</b> Tá quase pronto. Segue o @gastepouco.' },
+  ].map(c => ({ ...c, s: +c.s.toFixed(2), e: +c.e.toFixed(2) })),
+  // voz de cada fala: WAV extraído do próprio WebM (tools/heygen_prep.sh)
   vo: CLIPS.map(c => ({ file: `assets/heygen/${c.id}.wav`, t: c.t })),
   sfx: [
-    { t: 0.0, name: 'brasa', gain: .6 }, { t: 12.0, name: 'brasa', gain: .5 },
-    { t: 4.9, name: 'bipe' }, { t: 7.4, name: 'cha_ching', gain: .6 },
-    { t: 11.0, name: 'whoosh', gain: .5 }, { t: 14.6, name: 'bipe' }, { t: 16.5, name: 'whoosh', gain: .5 },
-    { t: 24.0, name: 'acorde' },
-  ],
+    { t: 0.0, name: 'brasa', gain: .5 }, { t: 12.0, name: 'brasa', gain: .4 },
+    { t: fala('03') + .3, name: 'bipe', gain: .6 }, { t: fala('04') + .9, name: 'cha_ching', gain: .5 },
+    { t: F6[0] - .1, name: 'whoosh', gain: .45 }, { t: F6[1] + .9, name: 'bipe', gain: .6 }, { t: F6[2] - .1, name: 'whoosh', gain: .45 },
+    { t: FIM, name: 'acorde' },
+  ].map(e => ({ ...e, t: +e.t.toFixed(2) })),
 };
 window.__seek(0);
 </script></body></html>

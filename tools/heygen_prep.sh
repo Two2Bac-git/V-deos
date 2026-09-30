@@ -10,7 +10,7 @@ mkdir -p "$(dirname "$OUT")"
 "$FF" -y -loglevel error -i "$IN" -vn -ac 2 -ar 48000 -c:a pcm_s16le "$OUT.wav"
 if [[ "$IN" == *.webm ]]; then
   # já vem com transparência do HeyGen (outputFormat webm): só copia
-  cp "$IN" "$OUT.webm"; echo "ok $OUT.webm $OUT.wav"
+  [[ "$(realpath "$IN")" == "$(realpath -m "$OUT.webm")" ]] || cp "$IN" "$OUT.webm"; echo "ok $OUT.webm $OUT.wav"
 elif [[ "${3:-}" == "--chroma" ]]; then
   "$FF" -y -loglevel error -i "$IN" -an -vf "chromakey=0x00FF00:0.16:0.08,despill=type=green" \
     -c:v libvpx-vp9 -pix_fmt yuva420p -b:v 4M -auto-alt-ref 0 "$OUT.webm"
