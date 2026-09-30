@@ -96,6 +96,31 @@ def brasa(d=12.0):
     return (y * .25 + lowpass(estalo, 3000)) * env(n, .5, .8) * .35
 
 
+def trilha(dur, bpm=96):
+    """Trilha própria (sem licença de terceiros): pad quente em dó maior (C–Am–F–G), kick macio e
+    chimbal leve. Feita para ficar baixa, por baixo das vozes e dos efeitos."""
+    n = int(dur * SR); t = np.arange(n) / SR; out = np.zeros(n); beat = 60 / bpm; bar = 4 * beat
+    acordes = [(261.63, 329.63, 392.0), (220.0, 261.63, 329.63), (174.61, 220.0, 261.63), (196.0, 246.94, 293.66)]
+    for b in range(int(dur / bar) + 1):
+        i0, i1 = int(b * bar * SR), min(n, int((b + 1) * bar * SR))
+        if i0 >= n: break
+        tt = t[i0:i1] - b * bar; env = np.minimum(1, tt / .35) * np.minimum(1, (bar - tt) / .35)
+        for f in acordes[b % 4]:
+            out[i0:i1] += (np.sin(2 * np.pi * f * tt) + .3 * np.sin(2 * np.pi * f * 2 * tt + .5)) * env * .05
+        baixo = acordes[b % 4][0] / 2
+        out[i0:i1] += np.sin(2 * np.pi * baixo * tt) * env * .07
+    k = np.arange(int(.25 * SR)) / SR; kick = np.sin(2 * np.pi * np.cumsum(90 * np.exp(-k * 25) + 45) / SR) * np.exp(-k * 14) * .35
+    hh = lowpass(rng.standard_normal(int(.05 * SR)), 7000) * np.exp(-np.arange(int(.05 * SR)) / 300) * .05
+    for j in range(int(dur / beat) + 1):
+        i = int(j * beat * SR); out[i:i + len(kick)] += kick[:max(0, n - i)]
+        i2 = int((j + .5) * beat * SR); out[i2:i2 + len(hh)] += hh[:max(0, n - i2)]
+    fade = int(.6 * SR); out[:fade] *= np.linspace(0, 1, fade); out[-int(1.2 * SR):] *= np.linspace(1, 0, int(1.2 * SR))
+    return out
+
+
+KENNEY = Path(__file__).resolve().parent.parent / 'assets' / 'sfx' / 'kenney'
+
+
 SFX = dict(whoosh=whoosh, bipe=bipe, bipe_grave=bipe_grave, tump=tump, impressora=impressora,
            cha_ching=cha_ching, notificacao=notificacao, rodinhas=rodinhas, acorde=acorde, brasa=brasa)
 
@@ -127,7 +152,8 @@ def main():
     cache = {}
     for ev in meta['sfx']:
         name = ev['name']
-        if name not in cache: cache[name] = SFX[name]()
+        if name not in cache:
+            cache[name] = read_wav(KENNEY / f'{name[2:]}.wav') if name.startswith('k:') else SFX[name]()
         s = cache[name] * ev.get('gain', 1.0); i = int(ev['t'] * SR)
         total[i:i + len(s)] += s[:len(total) - i]
     if '--vo' in sys.argv:
@@ -146,6 +172,17 @@ def main():
                 x[:f] *= np.linspace(0, 1, f); x[-f:] *= np.linspace(1, 0, f)
             total[i:i + len(x)] += x[:len(total) - i]
     total = total[:int(meta['duration'] * SR)]
+    mus = meta.get('music')
+    if mus:
+        bed = np.zeros(len(total)); a, b = int(mus.get('start', 0) * SR), int(min(meta['duration'], mus.get('end', meta['duration'])) * SR)
+        bed[a:b] = trilha((b - a) / SR, mus.get('bpm', 96))[:b - a] * mus.get('gain', 1.0)
+        # ducking: a trilha abaixa ~9 dB enquanto há fala
+        voz = np.zeros(len(total))
+        for v in vos:
+            i = int(v['t'] * SR); L = int((v['to'] - v['from']) * SR) if 'from' in v else len(read_wav(root / v['file']))
+            voz[i:i + L] = 1
+        g = 1 - .65 * lowpass(voz, 3.0)
+        total += bed * g
     peak = np.abs(total).max() or 1
     write_wav(out + '.audio.wav', total * (0.89 / peak))
 
@@ -158,6 +195,7 @@ def main():
     sfx_dir = Path(__file__).resolve().parent.parent / 'assets' / 'sfx'
     sfx_dir.mkdir(parents=True, exist_ok=True)
     for name, x in cache.items():
+        if name.startswith('k:'): continue
         p = sfx_dir / f'{name}.wav'
         if not p.exists(): write_wav(p, x / (np.abs(x).max() or 1) * .89)
     print('ok', out + '.audio.wav', out + '.srt')

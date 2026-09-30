@@ -5,20 +5,23 @@ Status (30/09): **gerado no HeyGen pelo MCP**; o download direto segue bloqueado
 daqui eles são puxados pelo conector do Drive, tratados com `tools/heygen_prep.sh` e montados com `tools/build.sh`.
 
 Elenco: V1 narradora = Stephanie (voz Sofia Brazil – Friendly) · V2 Ana = Jeyla (voz Ana Carvalho – Friendly),
-V2 Lu = Stephanie (voz Sofia Brazil – Friendly) · V3 = voz Aida (Tahlia só como voz).
+V2 Lu = Stephanie (voz Sofia Brazil – Friendly) · V3 = voz Aida (sem personagem em tela).
 
-| Arquivo final | Título no HeyGen | video_id |
-|---|---|---|
-| v1_narradora.mp4 | Gaste Pouco — V1 narradora (Stephanie) | 9629cf8cc50bcda0c512aa675cb77668 |
-| v2_01_lu.webm | Gaste Pouco — V2 01 Lu (Stephanie) | bf3bca61446fd7434c8033d0446c787c |
-| v2_02_ana.webm | Gaste Pouco — V2 02 Ana (Jeyla) | 1cd3bcacc9f25a61aeec0f8eb27ea57b |
-| v2_03_lu.webm | Gaste Pouco — V2 03 Lu (Stephanie) | a1c51bbe211a6440439e7403d9283836 |
-| v2_04_ana.webm | Gaste Pouco — V2 04 Ana (Jeyla) | cda768218256937b1222c5ccd6f6cab5 |
-| v2_05_lu.webm | Gaste Pouco — V2 05 Lu (Stephanie) | c70ade43fe6b7a5e10e608f8e0f68660 |
-| v2_06_ana.webm | Gaste Pouco — V2 06 Ana (Jeyla) | e6c2b6e31c45cd89dffb6a8158b621a9 |
-| v2_07_lu.webm | Gaste Pouco — V2 07 Lu (Stephanie) | 1b30499149f3fcc8aad3340cadc94114 |
-| v2_08_ana.webm | Gaste Pouco — V2 08 Ana (Jeyla) | 48b530b285a46bcffa61226b31a74d13 |
-| v3_narracao.wav | (áudio de text-to-speech; link em `v3_narracao.timing.json`) | — |
+**Versão atual: Avatar V** (motor `avatar_v`, direção de atuação por fala em `motionPrompt`, WebM transparente).
+A geração anterior (Avatar IV, sorriso fixo) foi descartada.
+
+| Arquivo final | Título no HeyGen | video_id | Direção |
+|---|---|---|---|
+| v1_narradora.webm | Gaste Pouco — V1 narradora (Stephanie) — Avatar V | eae6bc84f2ebf1700a3174211435eff1 | conversa natural, rosto neutro nas pausas, preocupação → curiosidade → sorriso só no fim |
+| v2_01_lu.webm | Gaste Pouco — V2 01 Lu (Stephanie) — Avatar V | 9c851797f12807f00636d485476a2391 | provou a picanha: olhos fecham de prazer, aceno |
+| v2_02_ana.webm | Gaste Pouco — V2 02 Ana (Jeyla) — Avatar V | ec0cf75f3b8688cac4bfc9441e076264 | concorda e pergunta, cabeça inclinada |
+| v2_03_lu.webm | Gaste Pouco — V2 03 Lu (Stephanie) — Avatar V | 2103dd4b917062c863f34c3fd271096b | resignada, dá de ombros, sem sorriso |
+| v2_04_ana.webm | Gaste Pouco — V2 04 Ana (Jeyla) — Avatar V | 29e76b8c90d8a51e4ef58d0f4bd485ca | modesta, sorriso contido, sem se gabar |
+| v2_05_lu.webm | Gaste Pouco — V2 05 Lu (Stephanie) — Avatar V | da1c1e835dd0b24363c1f3eabb0c6a33 | surpresa: sobrancelhas altas, inclina para frente |
+| v2_06_ana.webm | Gaste Pouco — V2 06 Ana (Jeyla) — Avatar V | c2764b9176738c5cffc4aaa8851223ac | explica com calma, pausas, gestos leves |
+| v2_07_lu.webm | Gaste Pouco — V2 07 Lu (Stephanie) — Avatar V | cb368dd0f1ca8ac2c54f6dc3f931aec0 | animada, ri, estende a mão pedindo o celular |
+| v2_08_ana.webm | Gaste Pouco — V2 08 Ana (Jeyla) — Avatar V | 42808f0bc93dc007e5327f7707c0e676 | calorosa, sorriso genuíno que assenta |
+| v3_narracao.wav | (text-to-speech; link em `v3_narracao.timing.json`) | — | voz Aida |
 
 Os clipes do V2 saem em WebM com transparência (sem fundo): entram direto sobre o quintal ilustrado.
 

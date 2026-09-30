@@ -62,6 +62,6 @@
   };
   window.__meta = () => {
     const V = window.VIDEO;
-    return { duration: V.duration, captions: V.captions, sfx: V.sfx || [], vo: V.vo || [] };
+    return { duration: V.duration, captions: V.captions, sfx: V.sfx || [], vo: V.vo || [], music: V.music || null, poster: V.poster ?? null };
   };
 })();

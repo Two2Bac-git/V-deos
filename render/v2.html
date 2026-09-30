@@ -158,6 +158,8 @@ function enquadra(t) {
 
 window.VIDEO = {
   duration: DURACAO,
+  poster: 11.0,
+  music: { bpm: 96, gain: .8 },
   scenes: [
     { id: 'quintal', start: 0, end: F6[0], render(lt, d, t) { enquadra(t); } },
     { id: 'ins1', start: F6[0], end: F6[1], render(t) { css('.c1', { transform: `scale(${lerp(.85, 1, k(t, .1, .45, E.back))})`, opacity: k(t, .1, .25) }); } },
@@ -190,7 +192,7 @@ window.VIDEO = {
     { t: 0.0, name: 'brasa', gain: .5 }, { t: 12.0, name: 'brasa', gain: .4 },
     { t: fala('03') + .3, name: 'bipe', gain: .6 }, { t: fala('04') + .9, name: 'cha_ching', gain: .5 },
     { t: F6[0] - .1, name: 'whoosh', gain: .45 }, { t: F6[1] + .9, name: 'bipe', gain: .6 }, { t: F6[2] - .1, name: 'whoosh', gain: .45 },
-    { t: FIM, name: 'acorde' },
+    { t: FIM, name: 'k:sino', gain: .5 },
   ].map(e => ({ ...e, t: +e.t.toFixed(2) })),
 };
 window.__seek(0);

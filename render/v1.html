@@ -167,6 +167,8 @@ const pipIn = (sel, t) => css(sel, { opacity: k(t, 0, .25), transform: `translat
 // do HeyGen e reposicionadas: as pausas longas foram encurtadas). O rosto aparece só no gancho.
 window.VIDEO = {
   duration: 29.5,
+  poster: 15.3,
+  music: { bpm: 96, gain: 1.0 },
   scenes: [
     { id: 's1', start: 0, end: 1.9, render(t, d) {
       css('.p1', { transform: `scale(${lerp(1, 1.06, t / d)})`, opacity: k(t, 0, .2) });
@@ -243,11 +245,11 @@ window.VIDEO = {
   sfx: [
     { t: 0.0, name: 'whoosh', gain: .5 }, { t: 2.05, name: 'bipe_grave', gain: .8 },
     { t: 3.8, name: 'rodinhas', gain: .7 }, { t: 6.1, name: 'whoosh', gain: .7 },
-    { t: 9.0, name: 'notificacao', gain: .8 },
+    { t: 9.0, name: 'k:bong', gain: .8 },
     { t: 13.95, name: 'cha_ching', gain: .8 },
-    ...[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ({ t: 16.2 + i * .13, name: 'bipe', gain: .35 })),
+    ...[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ({ t: 16.2 + i * .13, name: 'k:impacto', gain: .3 })),
     { t: 21.0, name: 'whoosh', gain: .35 },
-    { t: 25.4, name: 'acorde' },
+    { t: 25.4, name: 'k:sino', gain: .5 },
   ],
 };
 window.__seek(0);
