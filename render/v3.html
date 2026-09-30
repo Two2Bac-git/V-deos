@@ -1,0 +1,259 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Gaste Pouco — V3 A nota que vira cesta</title>
+<link rel="stylesheet" href="common.css">
+<style>
+.phone{width:640px;height:1180px;left:220px;top:250px}
+.phone .screen{padding:96px 36px 40px}
+.row{gap:18px}.row .dot{width:54px;height:54px}.row>div:nth-child(2){flex:1;min-width:0}
+.row .p{flex:none}
+.nota{position:absolute;width:520px;background:#FCFDFB;border-radius:10px;box-shadow:0 24px 60px rgba(20,37,42,.18);
+  padding:40px 38px 70px;font:500 25px/1.5 Inter;color:var(--grafite);font-variant-numeric:tabular-nums}
+.nota:after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:18px;
+  background:linear-gradient(135deg,#FCFDFB 50%,transparent 50%) 0 0/36px 18px,linear-gradient(-135deg,#FCFDFB 50%,transparent 50%) 0 0/36px 18px}
+.nota .h{font:700 28px/1.2 Inter;text-align:center;letter-spacing:.04em}
+.nota .bar{height:18px;background:#C9D3D0;border-radius:6px;margin:10px auto;filter:blur(5px)}
+.nota .it{display:flex;justify-content:space-between;border-bottom:2px dotted #C9D3D0;padding:6px 0}
+.nota .qr{width:190px;height:190px;margin:26px auto 8px;filter:blur(9px);
+  background:repeating-conic-gradient(var(--grafite) 0 25%,#FCFDFB 0 50%) 0 0/38px 38px}
+.nota .tot{display:flex;justify-content:space-between;font:700 30px/1.4 Inter;margin-top:14px}
+.nota .il{font:600 20px/1 Inter;letter-spacing:.08em;text-align:center;color:#6B7B78;margin-top:12px}
+.laranja{position:absolute;width:190px;height:190px;border-radius:50%;
+  background:radial-gradient(circle at 34% 32%,#FBB39F 0,#F47B62 55%,#D5604A 100%)}
+.laranja:before{content:"";position:absolute;width:62px;height:30px;border-radius:50%;background:var(--menta-escura);top:-14px;left:88px;transform:rotate(-24deg)}
+.arroz{position:absolute;width:400px;height:560px;border-radius:44px 44px 30px 30px;background:#FCFDFB;border:8px solid var(--verde);overflow:hidden}
+.arroz .faixa{position:absolute;left:0;right:0;top:170px;height:230px;background:var(--verde);color:var(--papel);text-align:center;padding-top:30px}
+.pcard{border-radius:36px;padding:40px 36px;flex:1}
+.row .n{font-size:30px}.row .p{font-size:34px}
+.row .x{font:600 24px/1.3 Inter;color:var(--menta-escura)}
+.risca{position:absolute;left:-8px;right:-8px;top:50%;height:7px;background:var(--coral);border-radius:4px;transform-origin:left center}
+.obra{position:absolute;inset:0;background-image:linear-gradient(rgba(119,201,165,.12) 2px,transparent 2px),linear-gradient(90deg,rgba(119,201,165,.12) 2px,transparent 2px);background-size:60px 60px}
+</style></head><body>
+<div class="stage">
+
+<!-- S1 0–1,8 laranja cai na nota -->
+<div class="scene fill-papel" id="s1">
+  <div class="nota n1" style="left:280px;top:760px;transform:rotate(-4deg)"></div>
+  <div class="laranja" id="lar"></div>
+</div>
+
+<!-- S2 1,8–4,0 arroz -->
+<div class="scene fill-papel" id="s2">
+  <div class="safe"><div class="tt t2" style="font-size:112px;color:var(--verde);margin-top:40px">O mesmo arroz<br>de 1 kg</div></div>
+  <div class="arroz" id="arroz" style="left:340px;top:640px">
+    <div class="faixa"><div class="tt" style="font-size:96px">ARROZ</div><div class="tt-400" style="font-size:54px;margin-top:10px">1 kg · tipo 1</div></div>
+  </div>
+</div>
+
+<!-- S3 4,0–6,5 R$ 4,49 x R$ 8,99 com fonte -->
+<div class="scene fill-papel" id="s3">
+  <div class="safe">
+    <div class="tt" style="font-size:112px;color:var(--verde);margin-top:40px">O mesmo arroz<br>de 1 kg</div>
+    <div style="display:flex;gap:36px;margin-top:120px">
+      <div class="pcard c1" style="border:6px solid var(--verde)">
+        <div class="label" style="color:var(--menta-escura)">Mercado A</div>
+        <div class="tt num" style="font-size:118px;color:var(--verde);margin-top:24px">R$&nbsp;4,49</div></div>
+      <div class="pcard c2" style="background:var(--verde);color:var(--papel)">
+        <div class="label" style="color:var(--menta)">Mercado B</div>
+        <div class="tt num" style="font-size:118px;margin-top:24px">R$&nbsp;8,99</div></div>
+    </div>
+  </div>
+  <div class="fonte" style="bottom:calc(var(--safe-bottom) + 200px)">Fonte: Procon-JP, 13 supermercados de João Pessoa, maio/2026</div>
+</div>
+
+<!-- S4 6,5–8,5 Ken Burns no R$ 8,99 -->
+<div class="scene fill-papel" id="s4">
+  <div id="kb4" style="position:absolute;inset:0;transform-origin:760px 700px">
+    <div class="safe">
+      <div style="display:flex;gap:36px;margin-top:380px">
+        <div class="pcard" style="border:6px solid var(--verde)"><div class="label" style="color:var(--menta-escura)">Mercado A</div>
+          <div class="tt num" style="font-size:118px;color:var(--verde);margin-top:24px">R$&nbsp;4,49</div></div>
+        <div class="pcard" style="background:var(--verde);color:var(--papel)"><div class="label" style="color:var(--menta)">Mercado B</div>
+          <div class="tt num" style="font-size:118px;margin-top:24px">R$&nbsp;8,99</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="safe"><div class="tt t4" style="font-size:96px;color:var(--verde);margin-top:40px">Mesma cidade.<br>Mesmo mês.</div></div>
+  <div class="fonte" style="bottom:calc(var(--safe-bottom) + 40px)">Fonte: Procon-JP, 13 supermercados de João Pessoa, maio/2026</div>
+</div>
+
+<!-- S5 8,5–10,5 nota sendo impressa -->
+<div class="scene fill-papel" id="s5">
+  <div style="position:absolute;left:230px;top:300px;width:620px;height:70px;border-radius:24px;background:var(--grafite);z-index:2"></div>
+  <div style="position:absolute;left:260px;top:335px;width:560px;height:1100px;overflow:hidden">
+    <div class="nota n5" style="left:20px;top:0"></div>
+  </div>
+</div>
+
+<!-- S6 10,5–12,5 leitura do QR code -->
+<div class="scene fill-papel" id="s6">
+  <div class="safe"><div class="tt" style="font-size:88px;color:var(--verde);margin-top:30px">Leia o QR code<br>da nota.</div></div>
+  <div class="phone" style="top:470px;height:1000px"><div class="screen" style="background:#2A3E43;padding:0">
+    <div class="selo" style="z-index:3">TELA ILUSTRATIVA</div>
+    <div class="nota n6" style="left:40px;top:-330px;transform:scale(.92);transform-origin:top left"></div>
+    <svg id="mira" viewBox="0 0 100 100" style="position:absolute;width:300px;height:300px;left:128px;top:300px">
+      <g fill="none" stroke="#77C9A5" stroke-width="7" stroke-linecap="round">
+        <path d="M6 30 V14 Q6 6 14 6 H30"/><path d="M70 6 H86 Q94 6 94 14 V30"/>
+        <path d="M94 70 V86 Q94 94 86 94 H70"/><path d="M30 94 H14 Q6 94 6 86 V70"/></g></svg>
+    <div id="ok6" style="position:absolute;left:50%;top:640px;transform:translateX(-50%);background:var(--menta);color:var(--grafite);font:700 30px/1 Inter;padding:18px 28px;border-radius:40px;white-space:nowrap">Nota lida</div>
+  </div></div>
+</div>
+
+<!-- S7 12,5–15,0 itens de sempre -->
+<div class="scene fill-papel" id="s7">
+  <div class="phone"><div class="screen">
+    <div class="selo">SIMULAÇÃO</div>
+    <div class="app-kicker">Montada com as suas notas</div>
+    <div class="app-title">Itens de sempre</div>
+    <div class="lista7"></div>
+  </div></div>
+</div>
+
+<!-- S8/S9 15,0–20,0 comparação da cesta -->
+<div class="scene fill-papel" id="s8">
+  <div id="kb8" style="position:absolute;inset:0">
+  <div class="phone"><div class="screen">
+    <div class="selo">SIMULAÇÃO</div>
+    <div class="app-kicker">Sua cesta do mês</div>
+    <div class="app-title">Onde sai mais em conta</div>
+    <div class="row r8" id="r8a"><div class="dot"></div><div><div class="n">Mercado da Esquina</div><div class="d">a pé</div></div><div class="p" style="position:relative">R$ 312,40<div class="risca" id="risca"></div></div></div>
+    <div class="row r8"><div class="dot"></div><div><div class="n">Mercadinho do Bairro</div><div class="d">a pé</div></div><div class="p">R$ 298,70</div></div>
+    <div class="row r8" id="best"><div class="dot"></div><div><div class="n">Atacarejo da Avenida</div><div class="d">cesta R$ 271,90</div><div class="x">+ ônibus ida e volta R$ 9,00</div></div><div class="p">R$ 280,90</div></div>
+    <div class="app-foot">Mesmos itens e quantidades. Deslocamento incluído. Preços das notas lidas perto de você.</div>
+  </div></div>
+  </div>
+</div>
+
+<!-- S10a 20,0–22,0 em construção -->
+<div class="scene fill-verde" id="s10a">
+  <div class="obra"></div>
+  <div class="safe" style="display:flex;align-items:center;justify-content:center">
+    <div class="tt t10" style="font-size:150px;text-align:center;color:var(--papel)">Em<br>construção.</div></div>
+</div>
+
+<!-- S10b 22,0–24,0 barra de progresso -->
+<div class="scene fill-verde" id="s10b">
+  <div class="obra"></div>
+  <div class="safe" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="label" style="color:var(--menta)">Gaste Pouco</div>
+    <div class="tt" style="font-size:84px;margin-top:22px">Lê a nota.<br>Monta a cesta.<br>Compara os mercados.</div>
+    <div style="margin-top:70px;height:34px;border-radius:20px;background:rgba(247,250,248,.18);overflow:hidden">
+      <div id="prog" style="height:100%;width:0;background:var(--menta);border-radius:20px"></div></div>
+    <div style="font:600 32px/1 Inter;margin-top:22px;opacity:.9">em construção</div>
+  </div>
+</div>
+
+<!-- S11 24,0–28,0 tela final -->
+<div class="scene fill-verde" id="s11"></div>
+
+<div id="cap" class="cap"></div>
+</div>
+
+<script src="engine.js"></script>
+<script src="shared.js"></script>
+<script>
+const { k, E, css, lerp, shake, $ } = A;
+
+// Nota fiscal ilustrativa: sem dados reais; CNPJ, CPF, chave e QR borrados (P0.6).
+const itens = [['ARROZ 5KG', '27,90'], ['FEIJAO CARIOCA 1KG', '8,49'], ['LEITE INTEGRAL 1L', '5,49'], ['CAFE TORRADO 500G', '24,50'], ['OLEO SOJA 900ML', '7,99'], ['ACUCAR 1KG', '4,79']];
+const notaHTML = `<div class="h">MERCADO DA ESQUINA</div><div class="bar" style="width:70%"></div><div class="bar" style="width:55%"></div>
+  <div style="margin-top:18px">${itens.map(i => `<div class="it"><span>${i[0]}</span><span>${i[1]}</span></div>`).join('')}</div>
+  <div class="tot"><span>TOTAL</span><span>R$ 79,16</span></div><div class="bar" style="width:80%;margin-top:18px"></div>
+  <div class="qr"></div><div class="bar" style="width:90%"></div><div class="il">NOTA ILUSTRATIVA</div>`;
+document.querySelectorAll('.nota').forEach(n => n.innerHTML = notaHTML);
+
+const lista = [['Arroz 5 kg', 'toda compra', 'R$ 27,90'], ['Feijão carioca 1 kg', 'toda compra', 'R$ 8,49'], ['Leite integral 1 L', '6 por mês', 'R$ 5,49'],
+  ['Café torrado 500 g', '2 por mês', 'R$ 24,50'], ['Óleo de soja 900 ml', '1 por mês', 'R$ 7,99']];
+$('.lista7').innerHTML = lista.map(i => `<div class="row"><div class="dot"></div><div><div class="n">${i[0]}</div><div class="d">${i[1]}</div></div><div class="p">${i[2]}</div></div>`).join('');
+
+document.getElementById('s11').innerHTML = Shared.endcardHTML();
+document.querySelector('.stage').insertAdjacentHTML('beforeend', Shared.setaHTML());
+
+window.VIDEO = {
+  duration: 28,
+  scenes: [
+    { id: 's1', start: 0, end: 1.8, render(t) {
+      // sobe, gira, cai sobre a nota e quica
+      const up = k(t, 0, .75, E.out), down = k(t, .75, 1.3, E.in);
+      const y = t < .75 ? lerp(1900, 380, up) : lerp(380, 690, down);
+      const bounce = t > 1.3 ? -Math.abs(Math.sin((t - 1.3) * 9)) * 40 * Math.exp(-(t - 1.3) * 6) : 0;
+      css('#lar', { left: '445px', top: (y + bounce) + 'px', transform: `rotate(${t * 420}deg)` });
+      css('.n1', { transform: `rotate(-4deg) scale(${1 + .02 * k(t, 1.3, 1.8)})` });
+    }},
+    { id: 's2', start: 1.8, end: 4.0, render(t, d) {
+      css('#arroz', { transform: `scale(${lerp(1, 1.08, t / d)}) translateY(${lerp(40, 0, k(t, 0, .5))}px)`, opacity: k(t, 0, .3) });
+      css('.t2', { transform: `translateY(${lerp(30, 0, k(t, 0, .4))}px)`, opacity: k(t, 0, .3) });
+    }},
+    { id: 's3', start: 4.0, end: 6.5, render(t) {
+      css('.c1', { transform: `scale(${lerp(.6, 1, k(t, .2, .5, E.back))})`, opacity: k(t, .2, .35) });
+      css('.c2', { transform: `scale(${lerp(.6, 1, k(t, 1.0, 1.3, E.back))})`, opacity: k(t, 1.0, 1.15) });
+    }},
+    { id: 's4', start: 6.5, end: 8.5, render(t, d) {
+      css('#kb4', { transform: `scale(${lerp(1.05, 1.22, E.io(t / d))})` });
+      css('.t4', { opacity: k(t, .15, .5), transform: `translateY(${lerp(30, 0, k(t, .15, .5))}px)` });
+    }},
+    { id: 's5', start: 8.5, end: 10.5, render(t) {
+      // a nota sai da impressora em passos
+      const p = k(t, .1, 1.6, E.lin); const steps = Math.floor(p * 14) / 14;
+      css('.n5', { top: lerp(-1100, 30, lerp(steps, p, .35)) + 'px' });
+    }},
+    { id: 's6', start: 10.5, end: 12.5, render(t) {
+      const s = lerp(1.5, 1, k(t, .1, 1.2, E.io));
+      css('#mira', { transform: `scale(${s})`, opacity: k(t, 0, .2) });
+      const [sx, sy] = shake(t, 1.3, .25, 6);
+      css('#ok6', { opacity: k(t, 1.3, 1.45), transform: `translate(calc(-50% + ${sx}px), ${sy}px) scale(${lerp(.7, 1, k(t, 1.3, 1.5, E.back))})` });
+    }},
+    { id: 's7', start: 12.5, end: 15.0, render(t) {
+      document.querySelectorAll('.lista7 .row').forEach((r, i) => {
+        const p = k(t, .15 + i * .32, .55 + i * .32, E.back);
+        css(r, { transform: `translateX(${lerp(700, 0, p)}px)`, opacity: k(t, .15 + i * .32, .35 + i * .32) });
+      });
+    }},
+    { id: 's8', start: 15.0, end: 20.0, render(t, d, T) {
+      document.querySelectorAll('.r8').forEach((r, i) => {
+        const p = k(t, .1 + i * .35, .5 + i * .35, E.out);
+        css(r, { transform: `translateY(${lerp(80, 0, p)}px)`, opacity: p });
+      });
+      // reveal (17,5 s): zoom rápido + tremida no menor total; o maior é riscado e cai
+      const rv = t - 2.5;
+      const z = rv < 0 ? 1 : lerp(1, 1.08, k(rv, 0, .25, E.out));
+      const [sx, sy] = shake(rv, 0, .35, 16);
+      css('#kb8', { transform: `translate(${sx}px,${sy}px) scale(${z})`, transformOrigin: '540px 1250px' });
+      css('#best .p', { transform: `scale(${rv < 0 ? 1 : lerp(1.25, 1.12, k(rv, .1, .5))})`, transformOrigin: 'right center', display: 'inline-block' });
+      $('#best').classList.toggle('best', rv >= 0);
+      css('#risca', { transform: `scaleX(${k(rv, .35, .6)})` });
+      const f = k(rv, .7, 1.6, E.in);
+      css('#r8a .p', { position: 'relative', zIndex: 5, transform: `translateY(${lerp(0, 900, f)}px) rotate(${f * 24}deg)`, opacity: 1 - k(rv, 1.2, 1.6) });
+    }},
+    { id: 's10a', start: 20.0, end: 22.0, render(t) {
+      css('.t10', { transform: `translateY(${lerp(80, 0, k(t, .25, .8, E.back))}px)`, opacity: k(t, .25, .5) });
+    }},
+    { id: 's10b', start: 22.0, end: 24.0, render(t) {
+      css('#prog', { width: lerp(8, 62, k(t, .2, 1.6, E.io)) + '%' });
+    }},
+    { id: 's11', start: 24.0, end: 28.01, render(t) { Shared.endcardRender($('#s11'), t); } },
+  ],
+  overlays: [t => Shared.seta(t, [8.25, 19.75])],
+  captions: [
+    { s: 1.8, e: 4.0, text: 'O mesmo arroz de um quilo…' },
+    { s: 4.0, e: 6.5, text: '…custava de R$ 4,49 a R$ 8,99 na mesma cidade.' },
+    { s: 8.5, e: 10.5, text: 'Toda compra gera uma nota.' },
+    { s: 10.5, e: 12.5, text: 'Leia o QR code da nota.' },
+    { s: 12.5, e: 15.0, text: 'O app monta a cesta que você compra todo mês…' },
+    { s: 15.0, e: 17.5, text: '…e compara nos mercados que você usa,' },
+    { s: 17.5, e: 20.0, text: 'contando até a passagem de ônibus.' },
+    { s: 20.0, e: 24.0, text: 'Estamos construindo o Gaste Pouco.' },
+  ],
+  sfx: [
+    { t: 0.05, name: 'whoosh', gain: .7 }, { t: 1.3, name: 'tump' },
+    { t: 1.8, name: 'whoosh', gain: .4 },
+    { t: 4.2, name: 'bipe' }, { t: 5.0, name: 'bipe' },
+    { t: 8.25, name: 'whoosh', gain: .8 }, { t: 8.6, name: 'impressora' },
+    { t: 11.8, name: 'bipe' },
+    { t: 12.65, name: 'whoosh', gain: .25 }, { t: 12.97, name: 'whoosh', gain: .25 }, { t: 13.29, name: 'whoosh', gain: .25 }, { t: 13.61, name: 'whoosh', gain: .25 }, { t: 13.93, name: 'whoosh', gain: .25 },
+    { t: 17.5, name: 'cha_ching' },
+    { t: 19.75, name: 'whoosh', gain: .8 },
+    { t: 24.0, name: 'acorde' },
+  ],
+};
+window.__seek(0);
+</script></body></html>
