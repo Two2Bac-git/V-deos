@@ -16,6 +16,7 @@ const FF = process.env.FFMPEG;
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
   await p.goto('file://' + path.resolve(src));
   await p.evaluate(() => document.fonts.ready);
+  await p.evaluate(() => window.__clipsReady ? window.__clipsReady() : null);
   await p.waitForTimeout(200);
   const meta = await p.evaluate(() => window.__meta());
   fs.writeFileSync(outBase + '.meta.json', JSON.stringify(meta, null, 1));

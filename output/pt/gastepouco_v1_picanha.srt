@@ -1,0 +1,27 @@
+1
+00:00:00,200 --> 00:00:02,000
+Tá caro comprar picanha?
+
+2
+00:00:04,000 --> 00:00:06,000
+Aí você volta pra casa com o carrinho vazio.
+
+3
+00:00:07,500 --> 00:00:10,000
+E se, antes de sair de casa,
+
+4
+00:00:10,000 --> 00:00:12,500
+você soubesse que o Mercado da Esquina costuma baixar a picanha às sextas?
+
+5
+00:00:15,000 --> 00:00:17,000
+Aí, sim.
+
+6
+00:00:17,000 --> 00:00:19,500
+Lê a nota, monta a sua cesta e avisa quando e onde vale comprar.
+
+7
+00:00:19,500 --> 00:00:23,000
+É isso que a gente está construindo.

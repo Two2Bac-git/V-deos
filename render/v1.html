@@ -1,0 +1,245 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Gaste Pouco — V1 Picanha</title>
+<link rel="stylesheet" href="common.css">
+<style>
+.placa{position:absolute;left:110px;top:430px;width:860px;border-radius:40px;background:var(--verde);color:var(--papel);
+  padding:56px 60px 64px;box-shadow:0 30px 70px rgba(20,37,42,.25);transform-origin:620px 520px}
+.placa .lbl{font:700 34px/1 Inter;letter-spacing:.14em;color:var(--menta)}
+.placa .prod{font-family:"Familjen Grotesk";font-weight:700;font-size:120px;letter-spacing:-.03em;line-height:1;margin-top:26px}
+.placa .preco{font-family:"Familjen Grotesk";font-weight:700;font-size:150px;letter-spacing:-.04em;line-height:1;margin-top:34px;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.placa .preco small{font-size:56px;letter-spacing:0;margin-left:8px}
+.phone{width:640px;height:1180px;left:220px;top:250px}
+.phone .screen{padding:96px 36px 40px}
+.card-oferta .t .num,.card-oferta .s .num{white-space:nowrap}
+.notif{position:absolute;left:34px;right:34px;top:120px;background:rgba(247,250,248,.97);border-radius:30px;padding:24px 26px;
+  display:flex;gap:20px;align-items:center;box-shadow:0 14px 40px rgba(20,37,42,.25)}
+.notif img{width:74px;height:74px;border-radius:18px;background:var(--papel)}
+.notif .a{font:700 26px/1.2 Inter;color:var(--verde)} .notif .b{font:500 26px/1.3 Inter;color:var(--grafite)}
+.big-num{font-family:"Familjen Grotesk";font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.risca{position:absolute;left:-10px;right:-10px;top:52%;height:14px;background:var(--coral);border-radius:7px;transform-origin:left center}
+.fluxo{display:flex;flex-direction:column;gap:22px;margin-top:70px}
+.fluxo .f9{display:flex;align-items:center;gap:44px}
+.fluxo .ic{width:230px;height:230px;border-radius:50%;background:#E4F2EC;display:grid;place-items:center;flex:none}
+.fluxo .ic svg{width:124px;height:124px}
+.fluxo .lb{font-family:"Familjen Grotesk";font-weight:700;font-size:78px;line-height:1;letter-spacing:-.03em;color:var(--verde)}
+.fluxo .sep{width:230px;text-align:center;font:700 64px/1 Inter;color:var(--menta-escura);transform:rotate(90deg)}
+</style></head><body>
+<div class="stage">
+
+<!-- S1 0–2,0 placa do açougue -->
+<div class="scene fill-papel" id="s1">
+  <div class="placa p1"><div class="lbl">AÇOUGUE</div><div class="prod">Picanha</div><div class="preco">R$ 149,90<small>/kg</small></div></div>
+  <div class="ilustr">PREÇOS ILUSTRATIVOS</div>
+  <div class="pip" style="left:660px;top:1010px;width:300px;height:390px">
+    <div class="clip-ph"><div class="lbl">AVATAR</div><div class="cabeca"></div><div class="corpo"></div></div>
+    <video class="clip" data-start="0" src="../assets/heygen/v1_narradora.mp4" preload="auto"></video></div>
+  <div class="tag-ia">Vídeo com avatar de IA</div>
+</div>
+
+<!-- S2 2,0–4,0 close no preço -->
+<div class="scene fill-papel" id="s2">
+  <div class="placa p2"><div class="lbl">AÇOUGUE</div><div class="prod">Picanha</div><div class="preco">R$ 149,90<small>/kg</small></div></div>
+  <div class="ilustr">PREÇOS ILUSTRATIVOS</div>
+  <div class="pip" style="left:660px;top:1010px;width:300px;height:390px">
+    <div class="clip-ph"><div class="lbl">AVATAR</div><div class="cabeca"></div><div class="corpo"></div></div>
+    <video class="clip" data-start="0" src="../assets/heygen/v1_narradora.mp4" preload="auto"></video></div>
+  <div class="tag-ia">Vídeo com avatar de IA</div>
+</div>
+
+<!-- S3 4,0–6,0 carrinho vazio saindo -->
+<div class="scene fill-papel" id="s3">
+  <svg id="cart3" viewBox="0 0 200 170" style="position:absolute;width:560px;height:476px;top:620px">
+    <g fill="none" stroke="#173D45" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 18 H34 L56 116 H164 L184 44 H44"/><path d="M66 80 H172"/></g>
+    <g fill="#173D45"><circle cx="72" cy="144" r="13"/><circle cx="150" cy="144" r="13"/></g></svg>
+  <div class="safe"><div class="tt t3" style="font-size:96px;color:var(--verde);margin-top:40px">Carrinho<br>vazio.</div></div>
+</div>
+
+<!-- S4 6,25–7,5 antes de sair de casa -->
+<div class="scene fill-papel" id="s4">
+  <svg id="casa" viewBox="0 0 200 180" style="position:absolute;left:240px;top:560px;width:600px;height:540px;transform-origin:50% 60%">
+    <g fill="none" stroke="#173D45" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 86 L100 18 L180 86"/><path d="M38 72 V164 H162 V72"/><path d="M86 164 V118 H114 V164"/></g>
+    <rect x="52" y="96" width="26" height="26" rx="4" fill="#77C9A5"/><rect x="124" y="96" width="26" height="26" rx="4" fill="#77C9A5"/></svg>
+  <div class="safe"><div class="tt t4" style="font-size:96px;color:var(--verde);margin-top:40px">Antes de sair<br>de casa…</div></div>
+</div>
+
+<!-- S5 7,5–10,0 celular sobe com notificação -->
+<div class="scene fill-papel" id="s5">
+  <div class="phone ph5"><div class="screen" style="background:linear-gradient(180deg,#2A5560,#173D45)">
+    <div class="selo">SIMULAÇÃO</div>
+    <div style="position:absolute;left:0;right:0;top:470px;text-align:center;color:var(--papel)"><div class="tt-400 num" style="font-size:150px">18:40</div><div style="font:500 34px/1 Inter;margin-top:14px;opacity:.9">quinta-feira</div></div>
+    <div class="notif" id="notif"><img src="../assets/brand/logo-simbolo.svg">
+      <div><div class="a">Gaste Pouco · agora</div><div class="b">Picanha costuma baixar às sextas no Mercado da Esquina.</div></div></div>
+  </div></div>
+</div>
+
+<!-- S6 10,0–12,5 alerta no app -->
+<div class="scene fill-papel" id="s6">
+  <div class="phone"><div class="screen">
+    <div class="selo">SIMULAÇÃO</div>
+    <div class="app-kicker">Perto de você</div>
+    <div class="app-title">Ofertas</div>
+    <div class="card-oferta c6">
+      <div class="k">Costuma baixar às sextas</div>
+      <div class="t">Picanha · <span class="num">R$ 99,90/kg</span><br>no Mercado da Esquina</div>
+      <div class="s">Em 5 das últimas 6 sextas saiu por até <span class="num">R$ 99,90/kg</span>. Hoje: <span class="num">R$ 149,90/kg</span>.</div>
+    </div>
+    <div class="app-foot">Estimativa com notas lidas por quem mora perto. O preço não é garantido pela loja.</div>
+  </div></div>
+</div>
+
+<!-- S7 12,5–15,0 reveal do preço -->
+<div class="scene fill-papel" id="s7">
+  <div id="kb7" style="position:absolute;inset:0;transform-origin:540px 900px">
+    <div class="safe" style="text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-bottom:160px">
+      <div class="label" style="color:var(--menta-escura)">Picanha · Mercado da Esquina</div>
+      <div id="velho" class="big-num" style="position:relative;display:inline-block;font-size:150px;color:var(--grafite);margin-top:70px">R$ 149,90<div class="risca" id="risca7"></div></div>
+      <div id="novo" class="big-num" style="font-size:210px;color:var(--verde);margin-top:40px">R$ 99,90</div>
+      <div class="tt" id="sexta" style="font-size:88px;color:var(--menta-escura);margin-top:36px">sexta-feira</div>
+    </div>
+  </div>
+  <div class="selo" style="left:50%;top:calc(var(--safe-top) + 10px);transform:translateX(-50%)">SIMULAÇÃO</div>
+</div>
+
+<!-- S8 15,0–17,0 carrinho cheio de picanha -->
+<div class="scene fill-papel" id="s8">
+  <div id="pilha" style="position:absolute;left:0;top:0;width:1080px;height:1920px"></div>
+  <svg id="cart8" viewBox="0 0 200 170" style="position:absolute;left:260px;width:560px;height:476px;top:820px">
+    <g fill="none" stroke="#173D45" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 18 H34 L56 116 H164 L184 44 H44"/><path d="M66 80 H172"/></g>
+    <g fill="#173D45"><circle cx="72" cy="144" r="13"/><circle cx="150" cy="144" r="13"/></g></svg>
+  <div class="safe"><div class="tt" style="font-size:110px;color:var(--verde);margin-top:40px">Aí, sim.</div></div>
+</div>
+
+<!-- S9 17,0–19,5 nota → cesta → alerta -->
+<div class="scene fill-papel" id="s9">
+  <div class="safe">
+    <div class="tt" style="font-size:84px;color:var(--verde);margin-top:40px">Como vai<br>funcionar</div>
+    <div class="fluxo">
+      <div class="f9"><div class="ic"><svg viewBox="0 0 60 60"><g fill="none" stroke="#173D45" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6 H46 V54 L40 50 L34 54 L28 50 L22 54 L14 50 Z"/><path d="M21 18 H39 M21 27 H39 M21 36 H32"/></g></svg></div><div class="lb">Lê a nota</div></div>
+      <div class="sep s9a">›</div>
+      <div class="f9"><div class="ic"><svg viewBox="0 0 60 60"><g fill="none" stroke="#173D45" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22 H52 L46 52 H14 Z"/><path d="M20 22 L28 8 M40 22 L32 8"/></g></svg></div><div class="lb">Monta<br>a cesta</div></div>
+      <div class="sep s9b">›</div>
+      <div class="f9"><div class="ic"><svg viewBox="0 0 60 60"><g fill="none" stroke="#173D45" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 40 V28 A14 14 0 0 1 44 28 V40 L48 46 H12 Z"/><path d="M25 52 A5 5 0 0 0 35 52"/></g><path d="M30 20 V34 M24 29 L30 35 L36 29" fill="none" stroke="#2F8A66" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lb">Avisa<br>quando</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S10a 19,5–21,2 quando e onde -->
+<div class="scene fill-papel" id="s10a">
+  <div class="safe" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="tt t10" style="font-size:150px;color:var(--verde)">Quando<br>e onde<br>vale<br>comprar.</div>
+  </div>
+  <svg id="seta10" viewBox="0 0 100 120" style="position:absolute;right:90px;width:220px;height:264px">
+    <g fill="none" stroke="#77C9A5" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M50 10 V100"/><path d="M18 68 L50 100 L82 68"/></g></svg>
+</div>
+
+<!-- S10b 21,2–23,0 avatar em destaque -->
+<div class="scene fill-papel" id="s10b">
+  <div class="pip p10" style="left:190px;top:260px;width:700px;height:960px">
+    <div class="clip-ph"><div class="lbl">AVATAR</div><div class="cabeca"></div><div class="corpo"></div></div>
+    <video class="clip" data-start="0" src="../assets/heygen/v1_narradora.mp4" preload="auto"></video></div>
+  <div class="tag-ia">Vídeo com avatar de IA</div>
+</div>
+
+<!-- S11 23,0–27,0 tela final -->
+<div class="scene fill-verde" id="s11"></div>
+
+<div id="cap" class="cap"></div>
+</div>
+<script src="engine.js"></script>
+<script src="shared.js"></script>
+<script>
+const { k, E, css, lerp, shake, $ } = A;
+document.getElementById('s11').innerHTML = Shared.endcardHTML();
+document.querySelector('.stage').insertAdjacentHTML('beforeend', Shared.setaHTML());
+
+// picanhas para a pilha cômica (fatias com capa de gordura)
+const pic = (w) => `<svg viewBox="0 0 100 60" style="width:${w}px"><path d="M6 44 Q10 12 50 8 Q90 10 94 40 Q70 54 50 52 Q26 54 6 44Z" fill="#C8605A"/>
+  <path d="M8 40 Q30 50 50 48 Q72 50 92 38 L94 44 Q70 58 50 56 Q26 58 6 48Z" fill="#F4E6D8"/></svg>`;
+const pos = [[330, 900], [500, 880], [650, 905], [400, 820], [570, 800], [470, 740], [360, 740], [620, 720], [520, 660]];
+$('#pilha').innerHTML = pos.map((p, i) => `<div class="pc" style="position:absolute;left:${p[0]}px;top:${p[1]}px;transform:rotate(${(i % 3 - 1) * 12}deg)">${pic(200)}</div>`).join('');
+
+const pipIn = (sel, t) => css(sel, { opacity: k(t, 0, .25), transform: `translateY(${lerp(40, 0, k(t, 0, .35, E.back))}px)` });
+
+window.VIDEO = {
+  duration: 27,
+  scenes: [
+    { id: 's1', start: 0, end: 2.0, render(t, d) {
+      css('.p1', { transform: `scale(${lerp(1, 1.06, t / d)})`, opacity: k(t, 0, .2) });
+      pipIn('#s1 .pip', t - .3);
+    }},
+    { id: 's2', start: 2.0, end: 4.0, render(t, d) {
+      const [sx, sy] = shake(t, .2, .35, 12);
+      css('.p2', { transform: `translate(${sx}px,${sy}px) scale(${lerp(1.25, 1.4, t / d)})` });
+    }},
+    { id: 's3', start: 4.0, end: 6.25, render(t) {
+      const x = lerp(260, 1150, k(t, .3, 2.1, E.in));
+      css('#cart3', { left: x + 'px', transform: `rotate(${Math.sin(t * 18) * 1.2}deg)` });
+      css('.t3', { opacity: k(t, .1, .4) });
+    }},
+    { id: 's4', start: 6.25, end: 7.5, render(t, d) {
+      css('#casa', { transform: `scale(${lerp(.92, 1.04, t / d)})` });
+      css('.t4', { opacity: k(t, .1, .4), transform: `translateY(${lerp(30, 0, k(t, .1, .45))}px)` });
+    }},
+    { id: 's5', start: 7.5, end: 10.0, render(t) {
+      css('.ph5', { top: lerp(1950, 250, k(t, 0, .7, E.out)) + 'px' });
+      css('#notif', { transform: `translateY(${lerp(-260, 0, k(t, 1.0, 1.35, E.back))}px)`, opacity: k(t, 1.0, 1.15) });
+    }},
+    { id: 's6', start: 10.0, end: 12.5, render(t) {
+      css('.c6', { transform: `scale(${lerp(.85, 1, k(t, .1, .45, E.back))})`, opacity: k(t, .1, .25) });
+    }},
+    { id: 's7', start: 12.5, end: 15.0, render(t) {
+      // 0,25 risca · 0,55 o preço antigo cai · 0,75 o novo entra com zoom rápido + tremida
+      css('#risca7', { transform: `scaleX(${k(t, .25, .5)})` });
+      const f = k(t, .55, 1.3, E.in);
+      css('#velho', { transform: `translateY(${lerp(0, 1100, f)}px) rotate(${f * 18}deg)`, opacity: 1 - k(t, 1.0, 1.3) });
+      css('#novo', { opacity: k(t, .75, .85), transform: `scale(${t < .75 ? .6 : lerp(1.35, 1, k(t, .75, 1.05, E.out))})` });
+      const [sx, sy] = shake(t, .75, .35, 18);
+      css('#kb7', { transform: `translate(${sx}px,${sy}px) scale(${t < .75 ? 1 : lerp(1.1, 1, k(t, .75, 1.2))})` });
+      css('#sexta', { opacity: k(t, 1.1, 1.35) });
+    }},
+    { id: 's8', start: 15.0, end: 17.0, render(t) {
+      document.querySelectorAll('.pc').forEach((el, i) => {
+        const t0 = .1 + i * .13, p = k(t, t0, t0 + .3, E.in);
+        el.style.opacity = t > t0 ? 1 : 0;
+        el.style.marginTop = lerp(-900, 0, p) + 'px';
+      });
+      css('#cart8', { transform: `rotate(${Math.sin(t * 20) * (t > .1 && t < 1.4 ? 1.5 : 0)}deg)` });
+    }},
+    { id: 's9', start: 17.0, end: 19.5, render(t) {
+      document.querySelectorAll('.f9').forEach((el, i) => css(el, { opacity: k(t, .1 + i * .5, .35 + i * .5), transform: `translateY(${lerp(50, 0, k(t, .1 + i * .5, .45 + i * .5, E.back))}px)` }));
+      css('.s9a', { opacity: k(t, .45, .6) }); css('.s9b', { opacity: k(t, .95, 1.1) });
+    }},
+    { id: 's10a', start: 19.5, end: 21.2, render(t) {
+      css('.t10', { opacity: k(t, 0, .3), transform: `translateY(${lerp(40, 0, k(t, 0, .45, E.back))}px)` });
+      css('#seta10', { top: lerp(620, 1180, k(t, .3, 1.4, E.io)) + 'px', opacity: k(t, .3, .45) });
+    }},
+    { id: 's10b', start: 21.2, end: 23.0, render(t) { css('.p10', { opacity: k(t, 0, .25), transform: `scale(${lerp(.94, 1, k(t, 0, .4, E.out))})` }); } },
+    { id: 's11', start: 23.0, end: 27.01, render(t) { Shared.endcardRender($('#s11'), t); } },
+  ],
+  overlays: [t => Shared.seta(t, [6.0])],
+  captions: [
+    { s: 0.2, e: 2.0, text: 'Tá caro comprar picanha?' },
+    { s: 4.0, e: 6.0, text: 'Aí você volta pra casa com o carrinho vazio.' },
+    { s: 7.5, e: 10.0, text: 'E se, antes de sair de casa,' },
+    { s: 10.0, e: 12.5, text: 'você soubesse que o Mercado da Esquina costuma baixar a picanha às sextas?' },
+    { s: 15.0, e: 17.0, text: 'Aí, sim.' },
+    { s: 17.0, e: 19.5, text: 'Lê a nota, monta a sua cesta e avisa quando e onde vale comprar.' },
+    { s: 19.5, e: 23.0, text: 'É isso que a gente está construindo.' },
+  ],
+  sfx: [
+    { t: 0.0, name: 'whoosh', gain: .6 }, { t: 2.2, name: 'bipe_grave' },
+    { t: 4.3, name: 'rodinhas' }, { t: 6.0, name: 'whoosh', gain: .8 },
+    { t: 8.5, name: 'notificacao' },
+    { t: 13.25, name: 'cha_ching' },
+    ...[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ({ t: 15.4 + i * .13, name: 'bipe', gain: .45 })),
+    { t: 17.1, name: 'impressora', gain: .5 },
+    { t: 19.5, name: 'whoosh', gain: .4 },
+    { t: 23.0, name: 'acorde' },
+  ],
+};
+window.__seek(0);
+</script></body></html>

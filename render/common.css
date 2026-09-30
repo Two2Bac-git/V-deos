@@ -65,3 +65,13 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--papel);col
 .logo-v{display:flex;flex-direction:column;align-items:center}
 .logo-v .disc{background:var(--papel);border-radius:50%;display:grid;place-items:center}
 .logo-v .wm{font-family:"Familjen Grotesk";font-weight:700;letter-spacing:-.03em;line-height:1}
+
+/* Janela da avatar (HeyGen). Enquanto o MP4 não chega, mostra o espaço reservado. */
+.pip{position:absolute;border-radius:40px;overflow:hidden;background:var(--verde);border:6px solid var(--papel);
+  box-shadow:0 24px 60px rgba(20,37,42,.3)}
+.pip video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.clip-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  background:linear-gradient(180deg,#24535C,#173D45)}
+.clip-ph .cabeca{width:44%;aspect-ratio:1;border-radius:50%;background:rgba(119,201,165,.55);margin-bottom:6%}
+.clip-ph .corpo{width:86%;height:34%;border-radius:50% 50% 0 0;background:rgba(119,201,165,.55)}
+.clip-ph .lbl{position:absolute;top:18px;left:0;right:0;text-align:center;font:700 22px/1 Inter;letter-spacing:.1em;color:var(--papel);opacity:.8}
