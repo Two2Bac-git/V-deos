@@ -3,37 +3,37 @@
 Lu: Nossa, que picanha boa!
 
 2
-00:00:02,290 --> 00:00:04,640
+00:00:02,140 --> 00:00:04,490
 Ana: Né? Quanto você pagou na sua?
 
 3
-00:00:04,660 --> 00:00:09,320
+00:00:04,360 --> 00:00:09,020
 Lu: R$ 139,90 o quilo, no mercado do centro.
 
 4
-00:00:09,340 --> 00:00:12,360
+00:00:08,890 --> 00:00:11,910
 Ana: Essa aqui foi R$ 99,90.
 
 5
-00:00:12,380 --> 00:00:13,830
+00:00:11,780 --> 00:00:13,230
 Lu: Sério? Onde?
 
 6
-00:00:13,850 --> 00:00:16,660
+00:00:13,380 --> 00:00:16,430
 Ana: No Mercado da Esquina. Na sexta costuma baixar.
 
 7
-00:00:16,660 --> 00:00:19,190
+00:00:16,430 --> 00:00:20,180
 Ana: Eu leio o QR code da nota e o app monta a minha cesta.
 
 8
-00:00:19,190 --> 00:00:20,880
+00:00:20,180 --> 00:00:22,380
 Ana: Aí ele compara os mercados que eu uso.
 
 9
-00:00:20,900 --> 00:00:21,830
+00:00:22,100 --> 00:00:23,030
 Lu: Me passa esse app!
 
 10
-00:00:21,850 --> 00:00:25,510
+00:00:22,900 --> 00:00:26,560
 Ana: Tá quase pronto. Segue o @gastepouco.

@@ -99,24 +99,33 @@ $('#varal').innerHTML = Array.from({ length: 16 }, (_, i) => `<div class="luz" s
   + '<svg style="position:absolute;inset:0" viewBox="0 0 1560 200" preserveAspectRatio="none"><path d="M0 60 Q780 220 1560 60" fill="none" stroke="#173D45" stroke-width="4"/></svg>';
 $('#fumacas').innerHTML = Array.from({ length: 6 }, (_, i) => `<div class="fumaca" data-i="${i}"></div>`).join('');
 
-// Um clipe HeyGen (WebM com transparência) por fala. A linha do tempo inteira sai das durações reais
-// medidas nos arquivos: cada fala entra 0,45 s antes do fim da anterior (corta o silêncio que o HeyGen
-// deixa no início e no fim), como numa conversa de verdade. v2_06 ainda estimada (arquivo pendente).
-const DUR = { v2_01_lu: 2.52, v2_02_ana: 2.82, v2_03_lu: 5.13, v2_04_ana: 3.49, v2_05_lu: 1.92, v2_06_ana: 7.5, v2_07_lu: 1.40, v2_08_ana: 4.13 };
-const SOBREPOE = .45, VOZ = .22;  // VOZ: silêncio inicial típico do clipe antes da primeira sílaba
-const CLIPS = []; { let t = 0;
-  for (const id of Object.keys(DUR)) { CLIPS.push({ id, who: id.endsWith('lu') ? 'lu' : 'ana', t: +t.toFixed(2), d: DUR[id] }); t += DUR[id] - SOBREPOE; } }
-const C = Object.fromEntries(CLIPS.map(c => [c.id.slice(3, 5), c]));  // C['03'] etc.
-const fala = n => C[n].t + VOZ, fimFala = n => C[n].t + C[n].d - .25;
-// a fala 06 tem três frases: alerta (inserção) · Ana em quadro · comparação (inserção)
-const F6 = [0, .40, .76, 1].map(f => fala('06') + f * (C['06'].d - VOZ - .25));
-const FIM = +(fimFala('08') + .15).toFixed(2), DURACAO = +(FIM + 4).toFixed(2);
+// Clipes HeyGen Avatar V (WebM com transparência), um por fala. A linha do tempo sai das durações reais:
+// entre falas diferentes, a próxima entra SOBREPOE s antes do fim da anterior (corta o silêncio de início/fim
+// que o HeyGen deixa); a fala 06 é dividida em 4 frases (pausas encurtadas), cada uma com seu destino:
+// 06a+06b sobre a tela de alerta, 06c com a Ana em quadro (vídeo sincronizado ao trecho), 06d sobre a comparação.
+const DUR = { v2_01_lu: 2.52, v2_02_ana: 2.82, v2_03_lu: 5.13, v2_04_ana: 3.49, v2_05_lu: 1.92, v2_07_lu: 1.40, v2_08_ana: 4.13 };
+const SEG06 = { a: [0.25, 1.60], b: [1.95, 3.55], c: [3.95, 7.65], d: [7.95, 10.25] };
+const SOBREPOE = .6, VOZ = .22;
+const ITENS = []; { let t = 0;
+  const add = (key, file, from, to, junto) => { ITENS.push({ key, file, who: file.endsWith('lu') ? 'lu' : 'ana', from, to, t: +t.toFixed(2) }); t += (to - from) - (junto ? -.05 : SOBREPOE); };
+  ['01', '02', '03', '04', '05'].forEach(n => { const f = Object.keys(DUR).find(k => k.startsWith('v2_' + n)); add(n, f, 0, DUR[f]); });
+  t += SOBREPOE - .15;  // a 06 começa quase colada, sem sobreposição (cai sobre a inserção)
+  ['a', 'b', 'c'].forEach(x => add('06' + x, 'v2_06_ana', ...SEG06[x], true));
+  add('06d', 'v2_06_ana', ...SEG06.d); t += .05;
+  ['07', '08'].forEach(n => { const f = Object.keys(DUR).find(k => k.startsWith('v2_' + n)); add(n, f, 0, DUR[f]); });
+}
+const C = Object.fromEntries(ITENS.map(i => [i.key, i]));
+const fala = k => C[k].t + (C[k].from ? .05 : VOZ), fimFala = k => C[k].t + (C[k].to - C[k].from) - (C[k].from ? .05 : .25);
+const F6 = [fala('06a'), fala('06c'), fala('06d'), fimFala('06d')];
+const FIM = +(fimFala('08') + .15).toFixed(2), DURACAO = +(FIM + 3.2).toFixed(2);
 
+// vídeos em quadro: um <video> por fala mostrada; data-start alinha o trecho ao tempo do vídeo final
+const EM_QUADRO = ['01', '02', '03', '04', '05', '06c', '07', '08'];
+const CLIPS = EM_QUADRO.map(k => ({ id: 'clip' + k, file: C[k].file, who: C[k].who, t: C[k].t, start: +(C[k].t - C[k].from).toFixed(2) }));
 CLIPS.forEach(c => document.querySelector('#' + c.who + ' .pip').insertAdjacentHTML('beforeend',
-  `<video class="clip" id="${c.id}" data-start="${c.t}" src="../assets/heygen/${c.id}.webm" preload="auto" style="display:none"></video>`));
-// clipe visível: o último que começou para essa personagem (fica no último quadro entre falas)
+  `<video class="clip" id="${c.id}" data-start="${c.start}" src="../assets/heygen/${c.file}.webm" preload="auto" style="display:none"></video>`));
+// clipe visível: o último que começou para essa personagem (só os que carregaram)
 function clipAtivo(who, t) {
-  // só clipes que carregaram (arquivo pendente → mantém o último quadro da fala anterior)
   const cs = CLIPS.filter(c => c.who === who && c.t <= t + .05 && document.getElementById(c.id).dataset.ok === '1');
   return (cs[cs.length - 1] || CLIPS.find(c => c.who === who)).id;
 }
@@ -158,7 +167,7 @@ function enquadra(t) {
 
 window.VIDEO = {
   duration: DURACAO,
-  poster: 11.0,
+  poster: 12.9,
   music: { bpm: 96, gain: .8 },
   scenes: [
     { id: 'quintal', start: 0, end: F6[0], render(lt, d, t) { enquadra(t); } },
@@ -187,7 +196,7 @@ window.VIDEO = {
     { s: fala('08'), e: fimFala('08'), text: '<b>Ana:</b> Tá quase pronto. Segue o @gastepouco.' },
   ].map(c => ({ ...c, s: +c.s.toFixed(2), e: +c.e.toFixed(2) })),
   // voz de cada fala: WAV extraído do próprio WebM (tools/heygen_prep.sh)
-  vo: CLIPS.map(c => ({ file: `assets/heygen/${c.id}.wav`, t: c.t })),
+  vo: ITENS.map(i => ({ file: `assets/heygen/${i.file}.wav`, from: i.from, to: i.to, t: i.t })),
   sfx: [
     { t: 0.0, name: 'brasa', gain: .5 }, { t: 12.0, name: 'brasa', gain: .4 },
     { t: fala('03') + .3, name: 'bipe', gain: .6 }, { t: fala('04') + .9, name: 'cha_ching', gain: .5 },
