@@ -66,7 +66,11 @@ Cuidado de tom: Lu não é julgada por ter pago mais. Ana informa; ninguém se g
 
 ---
 
-## Vídeo 3 — "A nota que vira cesta" · 28 s
+## Vídeo 3 — "A nota que vira cesta" · 27,4 s
+
+> Revisão 30/09: abertura encurtada para 1,2 s (laranja em arco contínuo, sem pausa no ar);
+> QR code centralizado na tela, com eventos marcados: mira fecha (0,2–1,0 s da cena), trava + bipe (1,0 s), "Nota lida" (1,1 s).
+> Todos os tempos abaixo de 1,8 s em diante recuam 0,6 s no vídeo final.
 
 Voz: narradora feminina (voz sintetizada). Visual: motion graphics.
 Gancho de atenção herdado do roteiro original: a laranja jogada para cima.

@@ -89,12 +89,12 @@
   <div class="safe"><div class="tt" style="font-size:88px;color:var(--verde);margin-top:30px">Leia o QR code<br>da nota.</div></div>
   <div class="phone" style="top:470px;height:1000px"><div class="screen" style="background:#2A3E43;padding:0">
     <div class="selo" style="z-index:3">TELA ILUSTRATIVA</div>
-    <div class="nota n6" style="left:40px;top:-330px;transform:scale(.92);transform-origin:top left"></div>
-    <svg id="mira" viewBox="0 0 100 100" style="position:absolute;width:300px;height:300px;left:128px;top:300px">
+    <div class="nota n6" style="left:0;top:0;transform-origin:top left"></div>
+    <svg id="mira" viewBox="0 0 100 100" style="position:absolute;width:300px;height:300px">
       <g fill="none" stroke="#77C9A5" stroke-width="7" stroke-linecap="round">
         <path d="M6 30 V14 Q6 6 14 6 H30"/><path d="M70 6 H86 Q94 6 94 14 V30"/>
         <path d="M94 70 V86 Q94 94 86 94 H70"/><path d="M30 94 H14 Q6 94 6 86 V70"/></g></svg>
-    <div id="ok6" style="position:absolute;left:50%;top:640px;transform:translateX(-50%);background:var(--menta);color:var(--grafite);font:700 30px/1 Inter;padding:18px 28px;border-radius:40px;white-space:nowrap">Nota lida</div>
+    <div id="ok6" style="position:absolute;left:50%;transform:translateX(-50%);background:var(--menta);color:var(--grafite);font:700 30px/1 Inter;padding:18px 28px;border-radius:40px;white-space:nowrap">Nota lida</div>
   </div></div>
 </div>
 
@@ -169,46 +169,48 @@ document.getElementById('s11').innerHTML = Shared.endcardHTML();
 document.querySelector('.stage').insertAdjacentHTML('beforeend', Shared.setaHTML());
 
 window.VIDEO = {
-  duration: 28,
+  duration: 27.4,
   scenes: [
-    { id: 's1', start: 0, end: 1.8, render(t) {
-      // sobe, gira, cai sobre a nota e quica
-      const up = k(t, 0, .75, E.out), down = k(t, .75, 1.3, E.in);
-      const y = t < .75 ? lerp(1900, 380, up) : lerp(380, 690, down);
-      const bounce = t > 1.3 ? -Math.abs(Math.sin((t - 1.3) * 9)) * 40 * Math.exp(-(t - 1.3) * 6) : 0;
-      css('#lar', { left: '445px', top: (y + bounce) + 'px', transform: `rotate(${t * 420}deg)` });
-      css('.n1', { transform: `rotate(-4deg) scale(${1 + .02 * k(t, 1.3, 1.8)})` });
+    { id: 's1', start: 0, end: 1.2, render(t) {
+      // arco balístico: sobe 0–0,45 s (ápice sem pausa) e cai no centro da nota em 0,95 s
+      const y = t < .45 ? lerp(420, 1950, Math.pow(1 - t / .45, 2)) : lerp(420, 1010, Math.pow(Math.min(1, (t - .45) / .5), 2));
+      const x = lerp(-160, 445, Math.min(1, t / .95));  // entra pela esquerda, fora da nota
+      const land = t - .95, sq = land > 0 ? Math.sin(Math.min(1, land / .18) * Math.PI) * .14 : 0;
+      css('#lar', { left: x + 'px', top: y + 'px', transform: `rotate(${Math.min(t, .95) * 520}deg) scale(${1 + sq}, ${1 - sq})` });
+      css('.n1', { transform: `rotate(-4deg) translateY(${land > 0 ? Math.sin(Math.min(1, land / .18) * Math.PI) * 8 : 0}px)` });
     }},
-    { id: 's2', start: 1.8, end: 4.0, render(t, d) {
+    { id: 's2', start: 1.2, end: 3.4, render(t, d) {
       css('#arroz', { transform: `scale(${lerp(1, 1.08, t / d)}) translateY(${lerp(40, 0, k(t, 0, .5))}px)`, opacity: k(t, 0, .3) });
       css('.t2', { transform: `translateY(${lerp(30, 0, k(t, 0, .4))}px)`, opacity: k(t, 0, .3) });
     }},
-    { id: 's3', start: 4.0, end: 6.5, render(t) {
+    { id: 's3', start: 3.4, end: 5.9, render(t) {
       css('.c1', { transform: `scale(${lerp(.6, 1, k(t, .2, .5, E.back))})`, opacity: k(t, .2, .35) });
       css('.c2', { transform: `scale(${lerp(.6, 1, k(t, 1.0, 1.3, E.back))})`, opacity: k(t, 1.0, 1.15) });
     }},
-    { id: 's4', start: 6.5, end: 8.5, render(t, d) {
+    { id: 's4', start: 5.9, end: 7.9, render(t, d) {
       css('#kb4', { transform: `scale(${lerp(1.05, 1.22, E.io(t / d))})` });
       css('.t4', { opacity: k(t, .15, .5), transform: `translateY(${lerp(30, 0, k(t, .15, .5))}px)` });
     }},
-    { id: 's5', start: 8.5, end: 10.5, render(t) {
+    { id: 's5', start: 7.9, end: 9.9, render(t) {
       // a nota sai da impressora em passos
       const p = k(t, .1, 1.6, E.lin); const steps = Math.floor(p * 14) / 14;
       css('.n5', { top: lerp(-1100, 30, lerp(steps, p, .35)) + 'px' });
     }},
-    { id: 's6', start: 10.5, end: 12.5, render(t) {
-      const s = lerp(1.5, 1, k(t, .1, 1.2, E.io));
-      css('#mira', { transform: `scale(${s})`, opacity: k(t, 0, .2) });
-      const [sx, sy] = shake(t, 1.3, .25, 6);
-      css('#ok6', { opacity: k(t, 1.3, 1.45), transform: `translate(calc(-50% + ${sx}px), ${sy}px) scale(${lerp(.7, 1, k(t, 1.3, 1.5, E.back))})` });
+    { id: 's6', start: 9.9, end: 11.9, render(t) {
+      // 0–0,2 mira aparece · 0,2–1,0 fecha sobre o QR · 1,0 trava (bipe) · 1,1 "Nota lida"
+      css('#mira', { transform: `scale(${lerp(1.6, 1, k(t, .2, 1.0, E.io))})`, opacity: k(t, 0, .2) });
+      css('#mira g', { stroke: t >= 1.0 ? '#2F8A66' : '#77C9A5' });
+      const lock = k(t, 1.0, 1.12), pulse = t >= 1.0 ? Math.sin(Math.min(1, (t - 1.0) / .2) * Math.PI) * .06 : 0;
+      css('#mira', { transform: `scale(${lerp(1.6, 1, k(t, .2, 1.0, E.io)) + pulse})` });
+      css('#ok6', { opacity: k(t, 1.1, 1.25), transform: `translateX(-50%) scale(${lerp(.7, 1, k(t, 1.1, 1.35, E.back))})` });
     }},
-    { id: 's7', start: 12.5, end: 15.0, render(t) {
+    { id: 's7', start: 11.9, end: 14.4, render(t) {
       document.querySelectorAll('.lista7 .row').forEach((r, i) => {
         const p = k(t, .15 + i * .32, .55 + i * .32, E.back);
         css(r, { transform: `translateX(${lerp(700, 0, p)}px)`, opacity: k(t, .15 + i * .32, .35 + i * .32) });
       });
     }},
-    { id: 's8', start: 15.0, end: 20.0, render(t, d, T) {
+    { id: 's8', start: 14.4, end: 19.4, render(t, d, T) {
       document.querySelectorAll('.r8').forEach((r, i) => {
         const p = k(t, .1 + i * .35, .5 + i * .35, E.out);
         css(r, { transform: `translateY(${lerp(80, 0, p)}px)`, opacity: p });
@@ -224,36 +226,48 @@ window.VIDEO = {
       const f = k(rv, .7, 1.6, E.in);
       css('#r8a .p', { position: 'relative', zIndex: 5, transform: `translateY(${lerp(0, 900, f)}px) rotate(${f * 24}deg)`, opacity: 1 - k(rv, 1.2, 1.6) });
     }},
-    { id: 's10a', start: 20.0, end: 22.0, render(t) {
+    { id: 's10a', start: 19.4, end: 21.4, render(t) {
       css('.t10', { transform: `translateY(${lerp(80, 0, k(t, .25, .8, E.back))}px)`, opacity: k(t, .25, .5) });
     }},
-    { id: 's10b', start: 22.0, end: 24.0, render(t) {
+    { id: 's10b', start: 21.4, end: 23.4, render(t) {
       css('#prog', { width: lerp(8, 62, k(t, .2, 1.6, E.io)) + '%' });
     }},
-    { id: 's11', start: 24.0, end: 28.01, render(t) { Shared.endcardRender($('#s11'), t); } },
+    { id: 's11', start: 23.4, end: 27.41, render(t) { Shared.endcardRender($('#s11'), t); } },
   ],
-  overlays: [t => Shared.seta(t, [8.25, 19.75])],
+  overlays: [t => Shared.seta(t, [7.65, 19.15])],
   captions: [
-    { s: 1.8, e: 4.0, text: 'O mesmo arroz de um quilo…' },
-    { s: 4.0, e: 6.5, text: '…custava de R$ 4,49 a R$ 8,99 na mesma cidade.' },
-    { s: 8.5, e: 10.5, text: 'Toda compra gera uma nota.' },
-    { s: 10.5, e: 12.5, text: 'Leia o QR code da nota.' },
-    { s: 12.5, e: 15.0, text: 'O app monta a cesta que você compra todo mês…' },
-    { s: 15.0, e: 17.5, text: '…e compara nos mercados que você usa,' },
-    { s: 17.5, e: 20.0, text: 'contando até a passagem de ônibus.' },
-    { s: 20.0, e: 24.0, text: 'Estamos construindo o Gaste Pouco.' },
+    { s: 1.2, e: 3.4, text: 'O mesmo arroz de um quilo…' },
+    { s: 3.4, e: 5.9, text: '…custava de R$ 4,49 a R$ 8,99 na mesma cidade.' },
+    { s: 7.9, e: 9.9, text: 'Toda compra gera uma nota.' },
+    { s: 9.9, e: 11.9, text: 'Leia o QR code da nota.' },
+    { s: 11.9, e: 14.4, text: 'O app monta a cesta que você compra todo mês…' },
+    { s: 14.4, e: 16.9, text: '…e compara nos mercados que você usa,' },
+    { s: 16.9, e: 19.4, text: 'contando até a passagem de ônibus.' },
+    { s: 19.4, e: 23.4, text: 'Estamos construindo o Gaste Pouco.' },
   ],
   sfx: [
-    { t: 0.05, name: 'whoosh', gain: .7 }, { t: 1.3, name: 'tump' },
-    { t: 1.8, name: 'whoosh', gain: .4 },
-    { t: 4.2, name: 'bipe' }, { t: 5.0, name: 'bipe' },
-    { t: 8.25, name: 'whoosh', gain: .8 }, { t: 8.6, name: 'impressora' },
-    { t: 11.8, name: 'bipe' },
-    { t: 12.65, name: 'whoosh', gain: .25 }, { t: 12.97, name: 'whoosh', gain: .25 }, { t: 13.29, name: 'whoosh', gain: .25 }, { t: 13.61, name: 'whoosh', gain: .25 }, { t: 13.93, name: 'whoosh', gain: .25 },
-    { t: 17.5, name: 'cha_ching' },
-    { t: 19.75, name: 'whoosh', gain: .8 },
-    { t: 24.0, name: 'acorde' },
+    { t: 0.05, name: 'whoosh', gain: .7 }, { t: 0.95, name: 'tump' },
+    { t: 1.2, name: 'whoosh', gain: .4 },
+    { t: 3.6, name: 'bipe' }, { t: 4.4, name: 'bipe' },
+    { t: 7.65, name: 'whoosh', gain: .8 }, { t: 8, name: 'impressora' },
+    { t: 10.9, name: 'bipe' },
+    { t: 12.05, name: 'whoosh', gain: .25 }, { t: 12.37, name: 'whoosh', gain: .25 }, { t: 12.69, name: 'whoosh', gain: .25 }, { t: 13.01, name: 'whoosh', gain: .25 }, { t: 13.33, name: 'whoosh', gain: .25 },
+    { t: 16.9, name: 'cha_ching' },
+    { t: 19.15, name: 'whoosh', gain: .8 },
+    { t: 23.4, name: 'acorde' },
   ],
 };
+// Centraliza o QR da nota no meio da tela do celular (S6) e põe a mira exatamente sobre ele.
+(function centerQR() {
+  const sc = document.querySelector('#s6 .screen'), n = document.querySelector('.n6'), qr = n.querySelector('.qr');
+  document.getElementById('s6').classList.add('on');
+  const S = .92, W = sc.clientWidth, H = sc.clientHeight;
+  const qx = qr.offsetLeft + qr.offsetWidth / 2, qy = qr.offsetTop + qr.offsetHeight / 2;
+  const cx = W / 2, cy = H * .5;
+  css(n, { transform: `scale(${S})`, left: (cx - qx * S) + 'px', top: (cy - qy * S) + 'px' });
+  css('#mira', { left: (cx - 150) + 'px', top: (cy - 150) + 'px' });
+  css('#ok6', { top: (cy + 200) + 'px' });
+  document.getElementById('s6').classList.remove('on');
+})();
 window.__seek(0);
 </script></body></html>
