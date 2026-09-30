@@ -21,7 +21,9 @@ Formato: 9:16, 1080x1920, 30 fps, 24–28 s. Tudo em português (decisão de 30/
 
 ## Vídeo 1 — "Picanha" (antes/depois) · 27 s
 
-Voz: narrador masculino grave (voz sintetizada). Visual: motion graphics na identidade da marca.
+Narração: **avatar HeyGen feminino** (mulher de 30 a 45 anos; a voz grave masculina foi descartada em 30/09).
+Visual: motion graphics na identidade da marca, com a avatar aparecendo em quadro pequeno no gancho (0–4 s) e no fechamento (19,5–23 s).
+Tag na tela nos trechos com a avatar: **"Vídeo com avatar de IA"** (além do rótulo de IA ao postar).
 
 | Tempo | Visual | Narração / texto na tela | SFX |
 |---|---|---|---|
@@ -91,4 +93,4 @@ Gancho de atenção herdado do roteiro original: a laranja jogada para cima.
 > compara nos mercados que você usa. Siga @gastepouco pra acompanhar.
 > Telas ilustrativas; preços simulados. [V3: Fonte do preço do arroz: Procon-JP, maio/2026.]
 
-Checklist de postagem: no Vídeo 2 (avatares HeyGen), ativar o rótulo **"Informação gerada por IA"** do Instagram.
+Checklist de postagem: nos Vídeos 1 e 2 (avatares HeyGen), ativar o rótulo **"Informação gerada por IA"** do Instagram.
