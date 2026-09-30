@@ -1,0 +1,15 @@
+{
+  "fonte": "HeyGen create_speech, voz Aida (orca), 30,51 s — audio_url em resource2.heygen.ai (download bloqueado no ambiente)",
+  "audio_url": "https://resource2.heygen.ai/text_to_speech/1167ac36d50949c892c9a7523220a772/2799eccbd72d48e0af3202a147d51146/id=1a195e37-676d-4984-a6c4-bf3b82385cbe.wav",
+  "frases": [
+    {"txt": "O mesmo arroz de um quilo…", "de": 0.299, "ate": 1.963},
+    {"txt": "…custava de R$ 4,49 a R$ 8,99, na mesma cidade.", "de": 2.347, "ate": 7.396},
+    {"txt": "Toda compra gera uma nota.", "de": 8.596, "ate": 10.234},
+    {"txt": "Leia o QR code da nota.", "de": 10.772, "ate": 12.653},
+    {"txt": "O app monta a cesta que você compra todo mês…", "de": 13.066, "ate": 16.127},
+    {"txt": "…e compara nos mercados que você usa,", "de": 16.607, "ate": 18.655},
+    {"txt": "contando até a passagem de ônibus.", "de": 19.039, "ate": 20.934},
+    {"txt": "Estamos construindo o Gaste Pouco.", "de": 21.898, "ate": 23.87},
+    {"txt": "Siga @gastepouco e acompanhe.", "de": 26.37, "ate": 30.264}
+  ]
+}

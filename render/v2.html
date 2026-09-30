@@ -41,12 +41,8 @@
     </div>
     <div id="fumacas"></div>
   </div>
-  <div class="pessoa" id="lu">
-    <div class="pip"><div class="clip-ph"><div class="cabeca"></div><div class="corpo"></div><div class="lbl">LU (avatar)</div></div>
-      <video class="clip" data-start="0" data-who="lu" src="../assets/heygen/v2_lu.webm" preload="auto"></video></div></div>
-  <div class="pessoa" id="ana">
-    <div class="pip"><div class="clip-ph"><div class="cabeca"></div><div class="corpo"></div><div class="lbl">ANA (avatar)</div></div>
-      <video class="clip" data-start="0" data-who="ana" src="../assets/heygen/v2_ana.webm" preload="auto"></video></div></div>
+  <div class="pessoa" id="lu"><div class="pip"><div class="clip-ph"><div class="cabeca"></div><div class="corpo"></div><div class="lbl">LU (avatar)</div></div></div></div>
+  <div class="pessoa" id="ana"><div class="pip"><div class="clip-ph"><div class="cabeca"></div><div class="corpo"></div><div class="lbl">ANA (avatar)</div></div></div></div>
   <div class="ilustr" id="ilu">PREÇOS ILUSTRATIVOS</div>
 </div>
 
@@ -93,6 +89,21 @@ $('#varal').innerHTML = Array.from({ length: 16 }, (_, i) => `<div class="luz" s
   + '<svg style="position:absolute;inset:0" viewBox="0 0 1560 200" preserveAspectRatio="none"><path d="M0 60 Q780 220 1560 60" fill="none" stroke="#173D45" stroke-width="4"/></svg>';
 $('#fumacas').innerHTML = Array.from({ length: 6 }, (_, i) => `<div class="fumaca" data-i="${i}"></div>`).join('');
 
+// Um clipe HeyGen (WebM com transparência) por fala; t = início da fala no vídeo.
+const CLIPS = [
+  { id: 'v2_01_lu', who: 'lu', t: 0.2 }, { id: 'v2_02_ana', who: 'ana', t: 2.3 },
+  { id: 'v2_03_lu', who: 'lu', t: 4.5 }, { id: 'v2_04_ana', who: 'ana', t: 6.9 },
+  { id: 'v2_05_lu', who: 'lu', t: 9.1 }, { id: 'v2_06_ana', who: 'ana', t: 11.1 },
+  { id: 'v2_07_lu', who: 'lu', t: 19.1 }, { id: 'v2_08_ana', who: 'ana', t: 21.1 },
+];
+CLIPS.forEach(c => document.querySelector('#' + c.who + ' .pip').insertAdjacentHTML('beforeend',
+  `<video class="clip" id="${c.id}" data-start="${c.t}" src="../assets/heygen/${c.id}.webm" preload="auto" style="display:none"></video>`));
+// clipe visível: o último que começou para essa personagem (fica no último quadro entre falas)
+function clipAtivo(who, t) {
+  const cs = CLIPS.filter(c => c.who === who && c.t <= t + .25);
+  return (cs[cs.length - 1] || CLIPS.find(c => c.who === who)).id;
+}
+
 // Plano e contraplano. Cada fala define quem está em quadro e o enquadramento.
 // who: 'lu' | 'ana' | null (inserção) · shot: 'medio' | 'close'
 const SHOTS = [
@@ -116,6 +127,8 @@ function enquadra(t) {
   css('#bg', { transform: `translateX(${bgX}px) scale(${flip * (1 + (z - 1) * .5)}, ${1 + (z - 1) * .5})`, transformOrigin: '50% 70%' });
   css('#lu', { display: sh.who === 'lu' ? 'block' : 'none', left: '250px', transform: `scale(${z})`, transformOrigin: '50% 30%' });
   css('#ana', { display: sh.who === 'ana' ? 'block' : 'none', left: '70px', transform: `scale(${z})`, transformOrigin: '50% 30%' });
+  ['lu', 'ana'].forEach(w => { const a = clipAtivo(w, t);
+    CLIPS.filter(c => c.who === w).forEach(c => { const v = document.getElementById(c.id); if (v.dataset.ok === '1') v.style.display = c.id === a ? 'block' : 'none'; }); });
   document.querySelectorAll('.fumaca').forEach(f => {
     const i = +f.dataset.i, p = ((t * .35 + i / 6) % 1);
     css(f, { left: (1150 + Math.sin(p * 6 + i) * 40) + 'px', top: lerp(980, 380, p) + 'px', opacity: .7 * (1 - p), transform: `scale(${lerp(.6, 2.2, p)})` });
@@ -153,7 +166,7 @@ window.VIDEO = {
     { s: 21.0, e: 24.0, text: '<b>Ana:</b> Tá quase pronto. Segue o @gastepouco.' },
   ],
   // falas: um WAV por avatar, com as falas nos tempos acima (extraído do MP4 do HeyGen)
-  vo: [{ file: 'assets/heygen/v2_lu.wav', t: 0 }, { file: 'assets/heygen/v2_ana.wav', t: 0 }],
+  vo: CLIPS.map(c => ({ file: `assets/heygen/${c.id}.wav`, t: c.t })),
   sfx: [
     { t: 0.0, name: 'brasa', gain: .6 }, { t: 12.0, name: 'brasa', gain: .5 },
     { t: 4.9, name: 'bipe' }, { t: 7.4, name: 'cha_ching', gain: .6 },

@@ -1,7 +1,26 @@
 # Ficha de produção — avatares HeyGen
 
-Status (30/09): **bloqueado pela rede do ambiente** (`*.heygen.ai`). Os vídeos já estão montados com
-espaço reservado; quando os arquivos chegarem aqui, basta rodar `tools/heygen_prep.sh` e `tools/build.sh`.
+Status (30/09): **gerado no HeyGen pelo MCP**; o download direto segue bloqueado pela rede do ambiente
+(`*.heygen.ai`). Os arquivos devem ser baixados no HeyGen, renomeados como abaixo e enviados ao Drive;
+daqui eles são puxados pelo conector do Drive, tratados com `tools/heygen_prep.sh` e montados com `tools/build.sh`.
+
+Elenco: V1 narradora = Stephanie (voz Sofia Brazil – Friendly) · V2 Ana = Jeyla (voz Ana Carvalho – Friendly),
+V2 Lu = Stephanie (voz Sofia Brazil – Friendly) · V3 = voz Aida (Tahlia só como voz).
+
+| Arquivo final | Título no HeyGen | video_id |
+|---|---|---|
+| v1_narradora.mp4 | Gaste Pouco — V1 narradora (Stephanie) | 9629cf8cc50bcda0c512aa675cb77668 |
+| v2_01_lu.webm | Gaste Pouco — V2 01 Lu (Stephanie) | bf3bca61446fd7434c8033d0446c787c |
+| v2_02_ana.webm | Gaste Pouco — V2 02 Ana (Jeyla) | 1cd3bcacc9f25a61aeec0f8eb27ea57b |
+| v2_03_lu.webm | Gaste Pouco — V2 03 Lu (Stephanie) | a1c51bbe211a6440439e7403d9283836 |
+| v2_04_ana.webm | Gaste Pouco — V2 04 Ana (Jeyla) | cda768218256937b1222c5ccd6f6cab5 |
+| v2_05_lu.webm | Gaste Pouco — V2 05 Lu (Stephanie) | c70ade43fe6b7a5e10e608f8e0f68660 |
+| v2_06_ana.webm | Gaste Pouco — V2 06 Ana (Jeyla) | e6c2b6e31c45cd89dffb6a8158b621a9 |
+| v2_07_lu.webm | Gaste Pouco — V2 07 Lu (Stephanie) | 1b30499149f3fcc8aad3340cadc94114 |
+| v2_08_ana.webm | Gaste Pouco — V2 08 Ana (Jeyla) | 48b530b285a46bcffa61226b31a74d13 |
+| v3_narracao.wav | (áudio de text-to-speech; link em `v3_narracao.timing.json`) | — |
+
+Os clipes do V2 saem em WebM com transparência (sem fundo): entram direto sobre o quintal ilustrado.
 
 Configuração comum a todos os clipes
 - Formato vertical 9:16 (1080x1920), idioma português do Brasil, avatares públicas femininas de 30 a 45 anos.
